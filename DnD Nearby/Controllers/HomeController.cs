@@ -12,8 +12,6 @@ namespace DnD_Nearby.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        
-
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -28,6 +26,17 @@ namespace DnD_Nearby.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult TestLogin()
+        {
+            return View();
+        }
+
+        public IActionResult CreateAccount(Account account)
+        {
+
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ValidatorAttribute\" />
+    <Folder Include="ValidationAttributes\" />
   </ItemGroup>
 
 </Project>
