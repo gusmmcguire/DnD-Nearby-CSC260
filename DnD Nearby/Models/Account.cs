@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
+using DnD_Nearby.ValidationAttributes;
 
 namespace DnD_Nearby.Models
 {
+    [AccountValidation]
     public class Account
     {
         [BsonId]
@@ -21,13 +23,11 @@ namespace DnD_Nearby.Models
         [BsonElement("Password")]
         [Required]
         public string Password { get; set; }
-        [BsonElement("DisplayName")]
-        public string DisplayName { get; set; } = "";
+        
         [BsonElement("FirstName")]
-        [Required]
         public string FirstName { get; set; }
+        
         [BsonElement("LastName")]
-        [Required]
         public string LastName { get; set; }
 
         public string FullName { get { return FirstName + " " + LastName; } }

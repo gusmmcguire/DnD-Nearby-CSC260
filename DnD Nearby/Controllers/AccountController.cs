@@ -27,13 +27,34 @@ namespace DnD_Nearby.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         public IActionResult CreateAccount(Account acc)
         {
+            if (accService.GetAccount(acc) != null)
+            {
+                ViewBag.Warning = "account already exists";
+                return View("AccountCreation");
+            }
             if (ModelState.IsValid)
             {
                 accService.Create(acc);
+                return Redirect("/Home/Index");
             }
             return View("AccountCreation");
+        }
+
+        //change to be better later
+        public IActionResult LoginAction(Account acc)
+        {
+            if (accService.GetAccount(acc) != null)
+            {
+                return Content(accService.GetAccount(acc).FullName);
+            }
+            return View("Login");
         }
     }
 }

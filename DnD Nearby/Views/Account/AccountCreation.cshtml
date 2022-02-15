@@ -1,8 +1,10 @@
 ﻿@model Account
 @{
     ViewData["Title"] = "Account Creation Page";
+    string warning = ViewBag.Warning;
 }
 
+<h3 class="alert-danger">@warning</h3>
 <form asp-controller="Account" asp-action="CreateAccount">
     <label for="Username">Username:</label>
     <input asp-for="Username" placeholder="Username" />
