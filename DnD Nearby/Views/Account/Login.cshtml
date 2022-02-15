@@ -1,0 +1,15 @@
+﻿@model Account
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+<form asp-controller="Account" asp-action="LoginAction">
+
+    <label for="Username">Username:</label>
+    <input asp-for="Username" placeholder="Username" />
+    <br />
+    <label for="Password">Password:</label>
+    <input asp-for="Password" placeholder="Password" />
+    <br />
+    <input type="submit" />
+</form>
