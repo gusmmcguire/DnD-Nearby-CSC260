@@ -54,6 +54,7 @@ namespace DnD_Nearby.Controllers
             {
                 return Content(accService.GetAccount(acc).FullName);
             }
+            ViewBag.warning = "account does not exist";
             return View("Login");
         }
     }
