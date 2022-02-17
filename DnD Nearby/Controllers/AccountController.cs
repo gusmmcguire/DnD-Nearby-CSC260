@@ -52,7 +52,13 @@ namespace DnD_Nearby.Controllers
         {
             if (accService.GetAccount(acc) != null)
             {
+                if(accService.GetAccount(acc).Password == acc.Password)
                 return Content(accService.GetAccount(acc).FullName);
+                else
+                {
+                    ViewBag.warning = "incorrect password";
+                    return View("Login");
+                }
             }
             ViewBag.warning = "account does not exist";
             return View("Login");
