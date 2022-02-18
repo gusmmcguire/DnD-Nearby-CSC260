@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using DnD_Nearby.ValidationAttributes;
 using DnD_Nearby.Enums;
 
-namespace DnD_Nearby.Models.Creatures
+namespace DnD_Nearby.Models
 {
     public class PlayerCharacter : Creature
     {

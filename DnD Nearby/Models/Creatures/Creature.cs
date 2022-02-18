@@ -7,7 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 using DnD_Nearby.ValidationAttributes;
 
-namespace DnD_Nearby.Models.Creatures
+namespace DnD_Nearby.Models
 {
     public abstract class Creature
     {

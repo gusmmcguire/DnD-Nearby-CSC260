@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DnD_Nearby.Enums;
+using DnD_Nearby.Models;
 
 namespace DnD_Nearby.Models
 {
@@ -18,13 +20,12 @@ namespace DnD_Nearby.Models
         DifficultyRatings[] Thresholds = new DifficultyRatings[20];
 
         public int ID { get; private set; }
-        // uncomment all lines once creatures are created.
-        //public List<Creature> Creatures { get; private set; }
+        public List<Creature> Creatures { get; private set; }
 
         public Encounter()
         {
             setThesholds();
-            //Creatures = new List<Creature>;
+            Creatures = new List<Creature>();
         }
 
         public Encounter(int id)
@@ -58,45 +59,70 @@ namespace DnD_Nearby.Models
             Thresholds[19].Easy = 2800; Thresholds[19].Medium = 5700; Thresholds[19].Hard = 8500; Thresholds[19].Deadly = 12700;
         }
 
-        public void AddCreature(/*Creature creature*/)
+        public void AddCreature(Creature creature)
         {
-            //Creatures.Add(creature);
+            Creatures.Add(creature);
         }
 
-        public void RemoveCreature(/*Creature creature*/)
+        public void RemoveCreature(Creature creature)
         {
-            //Creatures.Remove(creature);
+            Creatures.Remove(creature);
         }
 
-        public int CalcDifficulty()
+        public eDifficulty CalcDifficulty()
         {
-            /*  int partyXP;
-                foreach (Playercharacter player in Creatures)
-                {
-                    partyXP += Thresholds[player.Level]
-                }
-             */
+            DifficultyRatings partyXPThreshold = CalcPartyXPThreshold();
+            int encounterXP = 0;
 
-            return -1;
+            foreach (StatBlock creature in Creatures)
+            { 
+                encounterXP += (int)creature.CR;
+            }
+
+            if (encounterXP < partyXPThreshold.Easy)
+            {
+                return eDifficulty.VERY_EASY;
+            } 
+            else if (encounterXP < partyXPThreshold.Medium)
+            {
+                return eDifficulty.VERY_EASY;
+            }
+            else if (encounterXP < partyXPThreshold.Hard)
+            {
+                return eDifficulty.VERY_EASY;
+            } 
+            else if (encounterXP < partyXPThreshold.Deadly)
+            {
+                return eDifficulty.VERY_EASY;
+            } 
+            else
+            {
+                return eDifficulty.VERY_EASY;
+            }
         }
 
         private DifficultyRatings CalcPartyXPThreshold()
         {
             DifficultyRatings DR = new DifficultyRatings();
 
-            /*foreach (PlayerCharacter player in Creatures)
+            foreach (PlayerCharacter player in Creatures)
             {
-                player.Level;
-            }*/
+                DR.Easy += Thresholds[player.Level].Easy;
+                DR.Medium += Thresholds[player.Level].Medium;
+                DR.Hard += Thresholds[player.Level].Hard;
+                DR.Deadly += Thresholds[player.Level].Deadly;
+            }
 
             return DR;
         }
 
+        //gus can do
         public void SaveToDB()
         {
 
         }
 
+        //gus can do
         public void LoadFromDB(int id)
         {
 
