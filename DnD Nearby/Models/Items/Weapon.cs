@@ -14,7 +14,7 @@ namespace DnD_Nearby.Models
             this.DamageMod = damageMod;
         }
 
-        public override void Equip(ref int[] attributes, int modAttribIndex)
+        public override void Equip(int[] attributes, int modAttribIndex)
         {
             if (IsEquipped) return;
 
@@ -22,7 +22,7 @@ namespace DnD_Nearby.Models
             attributes = ModStats(attributes, modAttribIndex);
         }
 
-        public override void Unequip(ref int[] attributes, int modAttribIndex)
+        public override void Unequip(int[] attributes, int modAttribIndex)
         {
             if (!IsEquipped) return;
 
