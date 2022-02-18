@@ -30,16 +30,18 @@ namespace DnD_Nearby.Models
         {
             if (CreatureInitiatives.Count == 0) return;
 
+            KeyValuePair<Creature, int> creature;
+
             if (CurrentInitiative == null)
             {
-                var creatureInit = CreatureInitiatives.Aggregate((x, y) => (x.Value > y.Value) ? x : y);
-                CurrentCreature = creatureInit.Key;
-                CurrentInitiative = creatureInit.Value;
+                creature = CreatureInitiatives.Aggregate((x, y) => (x.Value > y.Value) ? x : y);
+                CurrentCreature = creature.Key;
+                CurrentInitiative = creature.Value;
                 
                 return;
             }
 
-            var temp = CreatureInitiatives.Aggregate((x, y) =>
+            creature = CreatureInitiatives.Aggregate((x, y) =>
                 (x.Key != CurrentCreature && y.Key != CurrentCreature)
                 ? ((x.Value <= CurrentInitiative && y.Value <= CurrentInitiative)
                     ? ((x.Value > y.Value) ? x : y)
@@ -47,7 +49,8 @@ namespace DnD_Nearby.Models
                 : ((x.Key != CurrentCreature) ? x : y)
             );
 
-            CreatureInitiatives.Where(creature => creature.Key == CurrentCreature);
+            CurrentCreature = creature.Key;
+            CurrentInitiative = creature.Value;
         }
 
         private void AddCreature(Creature creature, int initiative)
