@@ -39,8 +39,6 @@ namespace DnD_Nearby.Models
                 return;
             }
 
-            int tempInit = -20;
-
             var temp = CreatureInitiatives.Aggregate((x, y) =>
                 (x.Key != CurrentCreature && y.Key != CurrentCreature)
                 ? ((x.Value <= CurrentInitiative && y.Value <= CurrentInitiative)
