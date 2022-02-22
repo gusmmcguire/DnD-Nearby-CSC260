@@ -7,7 +7,7 @@ namespace DnD_Nearby.Models
 {
     public class Tool : Item
     {
-        List<Item> components = new List<Item>();
+        public List<Item> Components { get; } = new List<Item>();
 
         public Tool(int id, string name, float cost, string url) : base(id, name, cost, url)
         {
@@ -15,29 +15,29 @@ namespace DnD_Nearby.Models
 
         public Tool(int id, string name, float cost, string url, List<Item> components) : base(id, name, cost, url) 
         {
-            this.components = components;
+            this.Components = components;
         }
 
         public override void UseItem() {}
 
         public void AddComponent(Item component)
         {
-            components.Add(component);
+            Components.Add(component);
         }
 
         public void RemoveComponent(Item component)
         {
-            components.Remove(component);
+            Components.Remove(component);
         }
 
         public void RemoveComponent(int id)
         {
-            components.RemoveAll(c => c.ID == id);
+            Components.RemoveAll(c => c.ID == id);
         }
 
         public void RemoveComponent(string name)
         {
-            components.RemoveAll(c => c.Name == name);
+            Components.Remove(Components.Where(c => c.Name == name).First());
         }
     }
 }
