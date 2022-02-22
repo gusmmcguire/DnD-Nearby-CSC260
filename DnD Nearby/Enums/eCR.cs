@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace DnD_Nearby.Enums
 {
-    //Continue later
     public enum eCR
     {
         Zero = 0,

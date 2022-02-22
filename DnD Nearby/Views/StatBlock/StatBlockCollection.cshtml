@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<StatBlock>
+@{
+    ViewData["Title"] = "Character Collection Page";
+    bool hasStats = Model != null && Model.Count() > 0;
+}
+
+
+@{
+    if (!hasStats)
+    {
+        <form asp-controller="StatBlock" asp-action="StatBlockCollection">
+            <label for="user">Account Username to Search for</label>
+            <input name="user" placeholder="username"/>
+            <input type="submit" />
+        </form>
+    }
+    else
+    {
+        foreach (var st in Model)
+        {
+            <partial name="_StatPartialView" for="@st" />
+            <br />
+            <br />
+        }
+    }
+}
