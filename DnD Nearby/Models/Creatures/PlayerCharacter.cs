@@ -29,7 +29,6 @@ namespace DnD_Nearby.Models
         public string Background { get; set; }
 
         [BsonElement("CharacterFeats")]
-        [Required]
         public List<string> Feats { get; set; }
 
         [BsonElement("Experience")]
@@ -38,9 +37,9 @@ namespace DnD_Nearby.Models
 
         //copper, silver, electrum, gold, platinum
         [BsonElement("Coins")]
-        [Required]
         public int[] coins { get; set; }
 
+        public PlayerCharacter() { }
         public PlayerCharacter(string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, string player, string classIn, int level, string background, List<string> feats, List<Item> inventory = null) : base(name, race, attributes, maxHP, ac, languages, inventory)
         {
             this.Player = player;

@@ -15,6 +15,10 @@ namespace DnD_Nearby.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        [BsonElement("account_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string accountId { get; set; }
+
         [BsonElement("CreatureName")]
         [Required]
         public string Name { get; set; }
@@ -22,9 +26,8 @@ namespace DnD_Nearby.Models
         [BsonElement("Race")]
         [Required]
         public string Race { get; set; }
-
+        //str, dex, con, int, wis, char
         [BsonElement("Attributes")]
-        [Required]
         public int[] Attributes { get; set; }
 
         [BsonElement("MaxHP")]
@@ -39,7 +42,6 @@ namespace DnD_Nearby.Models
         public int AC { get; set; }
 
         [BsonElement("Languages")]
-        [Required]
         public List<string> Languages { get; set; }
 
         //store just spell name
@@ -52,6 +54,7 @@ namespace DnD_Nearby.Models
         [BsonElement("Inventory")]
         public List<Item> Inventory { get; set; }
 
+        public Creature() { }
         public Creature(string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, List<Item> inventory = null)
         {
             this.Name = name;

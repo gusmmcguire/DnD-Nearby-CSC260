@@ -22,6 +22,11 @@ namespace DnD_Nearby.Services
             return accounts.Find(account => true).ToList();
         }
 
+        public Account GetAccountByName(string username)
+        {
+            return accounts.Find(account => account.Username == username).FirstOrDefault();
+        }
+
         public Account GetAccount(string id)
         {
             return accounts.Find(account => account.Id == id).FirstOrDefault();

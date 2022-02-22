@@ -26,6 +26,8 @@ namespace DnD_Nearby
         {
             services.AddControllersWithViews();
             services.AddScoped<AccountService>();
+            services.AddScoped<PlayerCharacterService>();
+            services.AddScoped<StatBlockService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DnD_Nearby.Models
 {
-    public abstract class Item
+    public class Item
     {
         [Required]
         public int ID { get; set; }
@@ -22,6 +22,6 @@ namespace DnD_Nearby.Models
             this.DiscriptionURL = url;
         }
 
-        public abstract void UseItem();
+        public virtual void UseItem() { }
     }
 }
