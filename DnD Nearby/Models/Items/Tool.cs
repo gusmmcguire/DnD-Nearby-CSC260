@@ -9,11 +9,11 @@ namespace DnD_Nearby.Models
     {
         public List<Item> Components { get; } = new List<Item>();
 
-        public Tool(int id, string name, float cost, string url) : base(id, name, cost, url)
+        public Tool(int id, string name, Coins cost, string descriptUrl, string imgUrl) : base(id, name, cost, descriptUrl, imgUrl)
         {
         }
 
-        public Tool(int id, string name, float cost, string url, List<Item> components) : base(id, name, cost, url) 
+        public Tool(int id, string name, Coins cost, string descriptUrl, string imgUrl, List<Item> components) : base(id, name, cost, descriptUrl, imgUrl)
         {
             this.Components = components;
         }
