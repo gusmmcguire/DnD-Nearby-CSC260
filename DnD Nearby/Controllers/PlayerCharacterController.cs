@@ -68,7 +68,7 @@ namespace DnD_Nearby.Controllers
             if(chService.GetPlayerCharacter(ch.Id) == null)
             {
                 ViewBag.warning = "Trying to edit a non existant character";
-                return View("CharacterEditor");
+                return View("CharacterCollection");
             }
             if (ModelState.IsValid)
             {

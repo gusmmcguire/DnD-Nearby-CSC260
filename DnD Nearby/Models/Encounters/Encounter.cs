@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Enums;
 using DnD_Nearby.Models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace DnD_Nearby.Models
 {
@@ -19,20 +22,20 @@ namespace DnD_Nearby.Models
 
         DifficultyRatings[] Thresholds = new DifficultyRatings[20];
 
-        public int ID { get; private set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string ID { get; private set; }
+
+        [BsonElement("account_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string accountId { get; set; }
+
+        [BsonElement("creatures")]
         public List<Creature> Creatures { get; private set; }
 
         public Encounter()
         {
             setThesholds();
-            Creatures = new List<Creature>();
-        }
-
-        public Encounter(int id)
-        {
-            setThesholds();
-            ID = id;
-            LoadFromDB(ID);
         }
 
         private void setThesholds()
@@ -114,18 +117,6 @@ namespace DnD_Nearby.Models
             }
 
             return DR;
-        }
-
-        //gus can do
-        public void SaveToDB()
-        {
-
-        }
-
-        //gus can do
-        public void LoadFromDB(int id)
-        {
-
         }
     }
 }

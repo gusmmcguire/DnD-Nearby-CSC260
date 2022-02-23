@@ -3,36 +3,79 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using DnD_Nearby.Services;
 using DnD_Nearby.Models;
 
 namespace DnD_Nearby.Controllers
 {
     public class EncounterController : Controller
     {
+        private readonly AccountService accService;
+        private readonly EncounterService enService;
+
+        public EncounterController(AccountService accIn, EncounterService enIn)
+        {
+            accService = accIn;
+            enService = enIn;
+        }
+
         public IActionResult Index()
+        {
+            return Redirect("/Home/Index");
+        }
+
+        public IActionResult EncounterCreation()
         {
             return View();
         }
 
-        public IActionResult Encounter()
+        public IActionResult EncounterCollectionForm()
         {
-            Encounter encounter = new Encounter();
-            Creature[] creatures =
-            {
-                new StatBlock(Enums.eCR.Twenty, "Goosenator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-                new StatBlock(Enums.eCR.Twenty, "Isaianator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-                new StatBlock(Enums.eCR.Twenty, "Carlonator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-                new StatBlock(Enums.eCR.Twenty, "Jarenator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-                new StatBlock(Enums.eCR.Twenty, "Petenator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" })
-            };
+            return View("EncounterCollection");
+        }
 
-            foreach (Creature creature in creatures)
+        public IActionResult EncounterCollection(string user)
+        {
+            List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccountByName(user).Id).ToList();
+            return View(tempList);
+        }
+
+        public IActionResult EncounterEditor()
+        {
+            return View();
+        }
+
+        public IActionResult SingleEncounter(Encounter en)
+        {
+            return View(en);
+        }
+
+        public IActionResult CreateEncounter(Encounter en)
+        {
+            if (ModelState.IsValid)
             {
-                encounter.AddCreature(creature);
+                en.accountId = accService.GetAccountByName(en.accountId).Id;
+                enService.Create(en);
+                return Index();
             }
+            ViewBag.warning = "something not valid";
+            return View("EncounterCreation");
+        }
 
-            return View(encounter);
+        public IActionResult UpdateEncounter(Encounter en)
+        {
+            if(enService.GetEncounter(en.ID) == null)
+            {
+                ViewBag.warning = "Trying to edit a non existant encounter";
+                return View("EncounterCollection");
+            }
+            if (ModelState.IsValid)
+            {
+                enService.Update(en.ID, en);
+                return SingleEncounter(en);
+            }
+            ViewBag.warning = "something invalid";
+            return View("EncounterEditor");
         }
     }
 }
