@@ -10,7 +10,7 @@ namespace DnD_Nearby.Models
         public bool IsEquipped { get; set; }
         public int Modifier { get; set; }
 
-        public Equipment(int id, string name, float cost, string url, bool isEquipped, int modifier) : base(id, name, cost, url)
+        public Equipment(int id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped, int modifier) : base(id, name, cost, descriptUrl, imgUrl)
         {
             this.IsEquipped = IsEquipped;
             this.Modifier = modifier;
