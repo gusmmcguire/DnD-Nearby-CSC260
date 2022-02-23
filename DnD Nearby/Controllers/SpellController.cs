@@ -9,33 +9,6 @@ namespace DnD_Nearby.Controllers
 {
     public class SpellController : Controller
     {
-        Spell tmpSpell = new Spell
-            (
-                "Acid Splash", //name
-                "Conjuration", //school
-                "1 Action", //casting time
-                "60 Feet", //range
-                "Instantaneous", //duration
-                new string[] { "V", "S" }, //components 
-                new string[] { "Artificer", "Sorcerer", "Wizard" }, //acuired by
-                "You hurl a bubble of acid. Choose one creature you can see within range, or choose two creatures you can see within range that are within 5 feet of each other. A target must succeed on a Dexterity saving throw or take 1d6 acid damage." +
-                " At Higher Levels.This spell’s damage increases by 1d6 when you reach 5th level(2d6), 11th level(3d6), and 17th level(4d6)."
-            );
-        List<Spell> tmpSpellList = new List<Spell>();
-        public IActionResult Index()
-        {
-            return View("/Home/Index");
-        }
-
-        public IActionResult SpellPage()
-        {
-            return View(tmpSpell);
-        }
-        [HttpPost]
-        public IActionResult GetSpellPage(int Id)
-        {
-            var spell = tmpSpellList.Find(s => s.ID == Id);
-            return View("SpellPage", spell);
-        }
+        
     }
 }
