@@ -21,9 +21,9 @@ namespace DnD_Nearby.Models
 
         public InitiativeTracker(int id)
         {
-            Encounter encounter = new Encounter(id);
+            /*Encounter encounter = new Encounter(id);
 
-            Creatures = encounter.Creatures;
+            Creatures = encounter.Creatures;*/
         }
 
         public void NextCreature()

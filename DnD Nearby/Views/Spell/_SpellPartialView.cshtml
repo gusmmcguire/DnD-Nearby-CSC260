@@ -1,23 +1,22 @@
 ﻿@model Spell
 @{
     ViewData["Title"] = "SpellPartialView";
-    string spellAcuiredBy = "";
-    string components = "";
-    foreach (var s in Model.SpellAquiredBy)
-    {
-        spellAcuiredBy += s + ", ";
-    }
-    foreach(var c in Model.Components)
-    {
-        components += c + ", ";
-    }
 }
+
 <h2>Spell partial view</h2>
-<h2>@Model.Name</h2>
-<h3>School: @Model.School</h3>
-<h3>Casting Time: @Model.CastingTime</h3>
-<h3>Range: @Model.Range</h3>
-<h3>Duration: @Model.Duration</h3>
-<h3>Components: @components</h3>
-<h3>Spell acuired by: @spellAcuiredBy</h3>
-<h4>@Model.Description</h4>
+<h2>@Model.spellName</h2>
+@if (Model.spellLevel == 0)
+{
+    <h2>Cantrip</h2>
+}
+else
+{
+    <h2>Spell Level: @Model.spellLevel</h2>
+}
+<h3>School: @Model.spellSchool</h3>
+<h3>Casting Time: @Model.spellCast</h3>
+<h3>Range: @Model.spellRange</h3>
+<h3>Duration: @Model.spellDuration</h3>
+<h3>Components: @Model.spellComponent</h3>
+<h3>Spell acuired by: @Model.aquiredClasses</h3>
+<h4>@Model.spellDescription</h4>
