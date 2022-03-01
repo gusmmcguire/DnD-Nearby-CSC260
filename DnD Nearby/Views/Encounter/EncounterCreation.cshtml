@@ -1,0 +1,24 @@
+﻿@model EncounterCreationPage
+@{
+    DnD_Nearby.Models.StatBlockCollectionPartialPage partialPage = new DnD_Nearby.Models.StatBlockCollectionPartialPage(ref Model.creatureIDs, Model.statCollection);
+}
+
+<form asp-controller="Encounter" asp-action="CreateEncounter">
+    <label for="encounter.accounterId">Associated Account Username: </label>
+    <input asp-for="encounter.accountId" placeholder="username" />
+    <br />
+    <label for="encounter.enconterName">Name of Encounter</label>
+    <input asp-for="encounter.encounterName" placeholder="Name" />
+    @{
+        for (var i = 0; i < Model.creatureIDs.Count(); i++)
+        {
+            <input hidden asp-for="CreatureIDs[i]" value="@Model.CreatureIDs[i]" />
+        }
+        <h2>@Model.displayString</h2>
+    }
+
+    <input type="submit" value="Create Encounter" />
+</form>
+<div class="row jumbotron justify-content-center pre-scrollable">
+    <partial name="/Views/StatBlock/_StatBlockCollectionPartial.cshtml" for="@partialPage" />
+</div>

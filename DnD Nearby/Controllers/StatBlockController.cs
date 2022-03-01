@@ -19,6 +19,8 @@ namespace DnD_Nearby.Controllers
             accService = aS;
         }
 
+        
+
         public IActionResult Index()
         {
             return Redirect("/Home/Index");

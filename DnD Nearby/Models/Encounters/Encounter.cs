@@ -7,6 +7,8 @@ using DnD_Nearby.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using DnD_Nearby.Services;
 
 namespace DnD_Nearby.Models
 {
@@ -24,15 +26,22 @@ namespace DnD_Nearby.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ID { get; private set; }
+        public string ID { get; set; }
 
         [BsonElement("account_id")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string accountId { get; set; }
 
-        [BsonElement("creatures")]
-        public List<Creature> Creatures { get; private set; }
+        [BsonElement("encounter_name")]
+        public string encounterName { get; set; }
 
+
+        [BsonElement("creatures_ids")]
+        //[BsonRepresentation(BsonType.Array)]
+        public List<string> CreatureID { get; set; }
+
+        [BsonIgnore]
+        public List<Creature> Creatures { get; set; }
         public Encounter()
         {
             setThesholds();
@@ -117,6 +126,40 @@ namespace DnD_Nearby.Models
             }
 
             return DR;
+        }
+
+        //NEEDS CALLED IN CONTROLLER BEFORE RUNNING CALC DIFFICULTY/CALC PARTY XP
+        //TODO:
+        //  REFACTOR BECAUSE WE AREN'T USING ACTUAL PC'S FOR THIS
+        public void setupCreatures(StatBlockService sbS, PlayerCharacterService pcS)
+        {
+            List<StatBlock> stats = sbS.Get();
+            List<PlayerCharacter> players = pcS.Get();
+            foreach(string id in CreatureID)
+            {
+                bool found = false;
+                foreach(StatBlock stat in stats)
+                {
+                    if(id == stat.Id)
+                    {
+                        Creatures.Add(stat);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    foreach(PlayerCharacter pc in players)
+                    {
+                        if(id == pc.Id)
+                        {
+                            Creatures.Add(pc);
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

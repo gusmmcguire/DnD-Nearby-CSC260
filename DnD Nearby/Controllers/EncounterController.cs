@@ -12,11 +12,15 @@ namespace DnD_Nearby.Controllers
     {
         private readonly AccountService accService;
         private readonly EncounterService enService;
+        private readonly StatBlockService sbService;
+        private readonly PlayerCharacterService pcService;
 
-        public EncounterController(AccountService accIn, EncounterService enIn)
+        public EncounterController(AccountService accIn, EncounterService enIn, StatBlockService sbIn, PlayerCharacterService pcIn)
         {
             accService = accIn;
             enService = enIn;
+            sbService = sbIn;
+            pcService = pcIn;
         }
 
         public IActionResult Index()
@@ -24,9 +28,12 @@ namespace DnD_Nearby.Controllers
             return Redirect("/Home/Index");
         }
 
-        public IActionResult EncounterCreation()
+        public IActionResult EncounterCreation(string user = "admin_test")
         {
-            return View();
+
+            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id));
+            ecp.setupString(sbService, pcService);
+            return View(ecp);
         }
 
         public IActionResult EncounterCollectionForm()
@@ -50,10 +57,12 @@ namespace DnD_Nearby.Controllers
             return View(en);
         }
 
-        public IActionResult CreateEncounter(Encounter en)
+        public IActionResult CreateEncounter(EncounterCreationPage enP)
         {
             if (ModelState.IsValid)
             {
+                var en = enP.encounter;
+                en.CreatureID = enP.CreatureIDs.ToList();
                 en.accountId = accService.GetAccountByName(en.accountId).Id;
                 enService.Create(en);
                 return Index();
@@ -77,5 +86,18 @@ namespace DnD_Nearby.Controllers
             ViewBag.warning = "something invalid";
             return View("EncounterEditor");
         }
+
+        public IActionResult AddStatToEncounter(List<string> creatures, string stat, string accountName)
+        {
+            creatures.Add(stat);
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            creationPage.CreatureIDs = creatures.ToArray();
+            creationPage.setupString(sbService, pcService);
+            return View("EncounterCreation", creationPage);
+        }
+        /*public void AddStat(StatBlock stat, ref StatBlockEncounterPartialPage pageInfo)
+        {
+            pageInfo.CreatureRef.Add(stat);
+        }*/
     }
 }
