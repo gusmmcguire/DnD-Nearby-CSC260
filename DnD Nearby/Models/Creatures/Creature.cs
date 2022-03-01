@@ -9,7 +9,7 @@ using DnD_Nearby.ValidationAttributes;
 
 namespace DnD_Nearby.Models
 {
-    public abstract class Creature
+    public class Creature
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

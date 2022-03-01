@@ -33,5 +33,20 @@ namespace DnD_Nearby.Models
         [BsonElement("spell_description")]
         public string spellDescription { get; set; }
 
+
+        public Spell() { }
+
+        public Spell(int level, string name, string school, string castingTime, string range, string duration, string components, string spellAquiredBy, string description)
+        {
+            spellLevel = level;
+            spellName = name;
+            spellSchool = school;
+            spellCast = castingTime;
+            spellRange = range;
+            spellDuration = duration;
+            spellComponent = components;
+            aquiredClasses = spellAquiredBy;
+            spellDescription = description;
+        }
     }
 }

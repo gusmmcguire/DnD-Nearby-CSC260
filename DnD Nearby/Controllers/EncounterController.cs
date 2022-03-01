@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using DnD_Nearby.Services;
 using DnD_Nearby.Models;
 using DnD_Nearby.Enums;
 
@@ -11,34 +11,96 @@ namespace DnD_Nearby.Controllers
 {
     public class EncounterController : Controller
     {
-        Encounter encounter = new Encounter();
-        Creature[] creatures =
-        {
-            new StatBlock(Enums.eCR.Two, "Goosenator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-            new StatBlock(Enums.eCR.Two, "Isaianator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-            new StatBlock(Enums.eCR.Two, "Carlonator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-            new StatBlock(Enums.eCR.Two, "Jarenator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-            new StatBlock(Enums.eCR.Two, "Petenator", "Sweater", new int[] { 20, 20, 20, 20, 20, 20}, 10000, 35, new List<string>() { "Common" }),
-            new PlayerCharacter("Luciana", "half-gnome",new int[] { 1, 2, 3, 4, 5, 6 }, 1, 0, new List<string>() { "Common", "Gnomish" }, "Goose", "Sword-thingy", 10, "dead", new List<string>() { "urg" })
-        };
+        private readonly AccountService accService;
+        private readonly EncounterService enService;
+        private readonly StatBlockService sbService;
+        private readonly PlayerCharacterService pcService;
 
-        public EncounterController()
+        public EncounterController(AccountService accIn, EncounterService enIn, StatBlockService sbIn, PlayerCharacterService pcIn)
         {
-            foreach (Creature creature in creatures)
+            accService = accIn;
+            enService = enIn;
+            sbService = sbIn;
+            pcService = pcIn;
+        }
+
+        public IActionResult Index()
+        {
+            return Redirect("/Home/Index");
+        }
+
+        public IActionResult EncounterCreation(string user = "admin_test")
+        {
+
+            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id));
+            ecp.setupString(sbService, pcService);
+            return View(ecp);
+        }
+
+        public IActionResult EncounterCollectionForm()
+        {
+            return View("EncounterCollection");
+        }
+
+        public IActionResult EncounterCollection(string user)
+        {
+            List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccountByName(user).Id).ToList();
+            return View(tempList);
+        }
+
+        public IActionResult EncounterEditor()
+        {
+            return View();
+        }
+
+        public IActionResult SingleEncounter(Encounter en)
+        {
+            return View(en);
+        }
+
+        public IActionResult CreateEncounter(EncounterCreationPage enP)
+        {
+            if (ModelState.IsValid)
             {
-                encounter.AddCreature(creature);
+                var en = enP.encounter;
+                en.CreatureID = enP.CreatureIDs.ToList();
+                en.accountId = accService.GetAccountByName(en.accountId).Id;
+                enService.Create(en);
+                return Index();
             }
+            ViewBag.warning = "something not valid";
+            return View("EncounterCreation");
+        }
+
+        public IActionResult UpdateEncounter(Encounter en)
+        {
+            if(enService.GetEncounter(en.ID) == null)
+            {
+                ViewBag.warning = "Trying to edit a non existant encounter";
+                return View("EncounterCollection");
+            }
+            if (ModelState.IsValid)
+            {
+                enService.Update(en.ID, en);
+                return SingleEncounter(en);
+            }
+            ViewBag.warning = "something invalid";
+            return View("EncounterEditor");
+        }
+
+        public IActionResult AddStatToEncounter(List<string> creatures, string stat, string accountName)
+        {
+            creatures.Add(stat);
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            creationPage.CreatureIDs = creatures.ToArray();
+            creationPage.setupString(sbService, pcService);
+            return View("EncounterCreation", creationPage);
         }
 
         public IActionResult Encounter()
         {
-
-
             EncounterPage ep = new EncounterPage();
-            ep.encounter = encounter;
 
-
-            ViewBag.encounter = encounter;
             return View(ep);
         }
 
@@ -57,5 +119,9 @@ namespace DnD_Nearby.Controllers
 
             return View("Encounter", ep);
         }
+        /*public void AddStat(StatBlock stat, ref StatBlockEncounterPartialPage pageInfo)
+        {
+            pageInfo.CreatureRef.Add(stat);
+        }*/
     }
 }

@@ -10,6 +10,7 @@ using DnD_Nearby.Enums;
 
 namespace DnD_Nearby.Models
 {
+    [BsonIgnoreExtraElements]
     public class PlayerCharacter : Creature
     {
         [BsonElement("PlayerName")]
@@ -36,7 +37,6 @@ namespace DnD_Nearby.Models
         public int exp { get; set; }
 
         //copper, silver, electrum, gold, platinum
-        [BsonElement("Coins")]
         public Coins coins { get; set; }
 
         public PlayerCharacter() { }

@@ -22,6 +22,11 @@ namespace DnD_Nearby.Services
             return statBlocks.Find(stat => true).ToList();
         }
 
+        public List<StatBlock> GetStatBlocksByAccount(string userId)
+        {
+            return statBlocks.Find(stat => stat.accountId == userId).ToList();
+        }
+
         public StatBlock GetStatBlock(string id)
         {
             return statBlocks.Find(stat => stat.Id == id).FirstOrDefault();
