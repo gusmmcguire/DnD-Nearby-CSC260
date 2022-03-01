@@ -19,8 +19,8 @@ namespace DnD_Nearby.Models
 
         DifficultyRatings[] Thresholds = new DifficultyRatings[20];
 
-        public int ID { get; private set; }
-        public List<Creature> Creatures { get; private set; }
+        public string ID { get; set; }
+        public List<Creature> Creatures { get; set; }
 
         public Encounter()
         {
@@ -28,7 +28,7 @@ namespace DnD_Nearby.Models
             Creatures = new List<Creature>();
         }
 
-        public Encounter(int id)
+        public Encounter(string id)
         {
             setThesholds();
             ID = id;
@@ -73,8 +73,9 @@ namespace DnD_Nearby.Models
         {
             DifficultyRatings partyXPThreshold = CalcPartyXPThreshold();
             int encounterXP = 0;
+            var SBs = Creatures.Where(c => c.GetType() == typeof(StatBlock)).ToList();
 
-            foreach (StatBlock creature in Creatures)
+            foreach (StatBlock creature in SBs)
             { 
                 encounterXP += (int)creature.CR;
             }
@@ -85,27 +86,28 @@ namespace DnD_Nearby.Models
             } 
             else if (encounterXP < partyXPThreshold.Medium)
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.EASY;
             }
             else if (encounterXP < partyXPThreshold.Hard)
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.MEDIUM;
             } 
             else if (encounterXP < partyXPThreshold.Deadly)
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.HARD;
             } 
             else
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.DEADLY;
             }
         }
 
         private DifficultyRatings CalcPartyXPThreshold()
         {
             DifficultyRatings DR = new DifficultyRatings();
+            var PCs = Creatures.Where(c => c.GetType() == typeof(PlayerCharacter));
 
-            foreach (PlayerCharacter player in Creatures)
+            foreach (PlayerCharacter player in PCs)
             {
                 DR.Easy += Thresholds[player.Level].Easy;
                 DR.Medium += Thresholds[player.Level].Medium;
@@ -123,7 +125,7 @@ namespace DnD_Nearby.Models
         }
 
         //gus can do
-        public void LoadFromDB(int id)
+        public void LoadFromDB(string id)
         {
 
         }
