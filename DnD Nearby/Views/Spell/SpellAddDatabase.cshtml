@@ -1,0 +1,39 @@
+﻿@model Spell
+@{
+    ViewData["Title"] = "Character Creation";
+    string warning = ViewBag.Warning;
+}
+
+<h3 class="alert-danger">@warning</h3>
+<form asp-controller="Spell" asp-action="CreateSpell">
+    <label for="spellLevel">Spell Level (0 if cantrip):</label>
+    <input asp-for="spellLevel" placeholder="0" />
+    <br />
+    <label for="spellName">Spell Name:</label>
+    <input asp-for="spellName" placeholder="name" />
+    <br />
+    <label for="spellSchool">Spell School:</label>
+    <input asp-for="spellSchool" placeholder="school" />
+    <br />
+    <label for="spellCast">Spell Cast Time:</label>
+    <input asp-for="spellCast" placeholder="cast" />
+    <br />
+    <label for="spellRange">Spell Range:</label>
+    <input asp-for="spellRange" placeholder="range" />
+    <br />
+    <label for="spellDuration">Spell Duration:</label>
+    <input asp-for="spellDuration" placeholder="duration" />
+    <br />
+    <label for="spellComponent">Spell Components:</label>
+    <input asp-for="spellComponent" placeholder="components" />
+    <br />
+    <label for="aquiredClasses">Aquired Classes:</label>
+    <input asp-for="aquiredClasses" placeholder="classes" />
+    <br />
+    <label for="spellDescription">Spell description:</label>
+    <input asp-for="spellDescription" placeholder="description"/>
+    <br />
+
+    <input type="submit" />
+
+</form>
