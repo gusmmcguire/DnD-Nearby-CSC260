@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Services;
 using DnD_Nearby.Models;
+using DnD_Nearby.Enums;
 
 namespace DnD_Nearby.Controllers
 {
@@ -95,7 +96,29 @@ namespace DnD_Nearby.Controllers
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
         }
-        
+
+        public IActionResult Encounter()
+        {
+            EncounterPage ep = new EncounterPage();
+
+            return View(ep);
+        }
+
+        [HttpPost]
+        public IActionResult CalcDiff(EncounterPage ep)
+        {
+            foreach(StatBlock sb in ep.StatBlocks)
+            {
+                ep.encounter.AddCreature(sb);
+            }
+            foreach(PlayerCharacter pc in ep.PlayerCharacters)
+            {
+                ep.encounter.AddCreature(pc);
+            }
+            ep.diff = ep.encounter.CalcDifficulty();
+
+            return View("Encounter", ep);
+        }
         [HttpPost]
         public IActionResult AddPlayerToEncounter(PlayerPartialMakerPage playerPartialMakerPage)
         {
