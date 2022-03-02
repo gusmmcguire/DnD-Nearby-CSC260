@@ -30,6 +30,7 @@ namespace DnD_Nearby
             services.AddScoped<StatBlockService>();
             services.AddScoped<SpellService>();
             services.AddScoped<EncounterService>();
+            services.AddScoped<ItemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
