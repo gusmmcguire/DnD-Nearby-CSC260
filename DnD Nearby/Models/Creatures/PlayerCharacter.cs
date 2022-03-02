@@ -14,19 +14,15 @@ namespace DnD_Nearby.Models
     public class PlayerCharacter : Creature
     {
         [BsonElement("PlayerName")]
-        [Required]
         public string Player { get; set; }
 
         [BsonElement("CharacterClass")]
-        [Required]
         public string Class { get; set; }
 
         [BsonElement("CharacterLevel")]
-        [Required]
         public int Level { get; set; }
 
         [BsonElement("CharacterBackground")]
-        [Required]
         public string Background { get; set; }
 
         [BsonElement("CharacterFeats")]
