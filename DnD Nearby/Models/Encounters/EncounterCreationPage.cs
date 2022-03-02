@@ -23,11 +23,12 @@ namespace DnD_Nearby.Models
         public List<StatBlock> statCollection { get; set; }
         public string displayString { get; set; }
         public string accountName { get; set; }
+        public PlayerCharacter pc { get; set; }
 
-        public void setupString(StatBlockService sbS, PlayerCharacterService pcS)
+        public void setupString(StatBlockService sbS, PartialPlayerService ppcS)
         {
             List<StatBlock> stats = sbS.Get();
-            List<PlayerCharacter> players = pcS.Get();
+            List<PlayerCharacter> players = ppcS.Get();
             displayString = "Creatures in Encounter: ";
             foreach (string id in CreatureIDs)
             {

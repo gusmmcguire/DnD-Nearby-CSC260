@@ -134,10 +134,10 @@ namespace DnD_Nearby.Models
         //NEEDS CALLED IN CONTROLLER BEFORE RUNNING CALC DIFFICULTY/CALC PARTY XP
         //TODO:
         //  REFACTOR BECAUSE WE AREN'T USING ACTUAL PC'S FOR THIS
-        public void setupCreatures(StatBlockService sbS, PlayerCharacterService pcS)
+        public void setupCreatures(StatBlockService sbS, PartialPlayerService ppcS)
         {
             List<StatBlock> stats = sbS.Get();
-            List<PlayerCharacter> players = pcS.Get();
+            List<PlayerCharacter> players = ppcS.Get();
             foreach(string id in CreatureID)
             {
                 bool found = false;
