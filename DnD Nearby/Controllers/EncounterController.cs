@@ -119,15 +119,18 @@ namespace DnD_Nearby.Controllers
 
             return View("Encounter", ep);
         }
+
         [HttpPost]
-        public IActionResult AddPlayerToEncounter(PlayerPartialMakerPage playerPartialMakerPage)
+        public IActionResult AddPlayerToEncounter(PlayerPartialMakerPage playerPartialPage)
         {
-            ppcService.Create(playerPartialMakerPage.pcForPage);
-            playerPartialMakerPage.CreatureRef.Add(playerPartialMakerPage.pcForPage.Id);
+
+            ppcService.Create(playerPartialPage.pcForPage);
+            playerPartialPage.CreatureRef.Add(playerPartialPage.pcForPage.Id);
             EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
-            creationPage.CreatureIDs = playerPartialMakerPage.CreatureRef.ToArray();
+            creationPage.CreatureIDs = playerPartialPage.CreatureRef.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
+
         }
     }
 }
