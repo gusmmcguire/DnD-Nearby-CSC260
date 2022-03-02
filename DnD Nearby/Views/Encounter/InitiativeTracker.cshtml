@@ -1,0 +1,27 @@
+﻿@model InitiativePage 
+@{
+    ViewData["Title"] = "Initiative Tracker";
+}
+
+<div class="container">
+    <h1>Encounter</h1>
+    <div class="row">
+        @foreach (Creature creature in Model.encounter.Creatures)
+        {
+            <div class="col-4">
+                @if (creature.GetType() == typeof(PlayerCharacter))
+                {
+                    <partial name="/Views/PlayerCharacter/_CharacterPartialView.cshtml" for="@creature" />
+                    <br />
+                    <br />
+                }
+                else
+                {
+                    <partial name="/Views/StatBlock/_StatPartialView.cshtml" for="@creature" />
+                    <br />
+                    <br />
+                }
+            </div>
+        }
+    </div>
+</div>

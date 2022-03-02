@@ -29,6 +29,8 @@ namespace DnD_Nearby
             services.AddScoped<PlayerCharacterService>();
             services.AddScoped<StatBlockService>();
             services.AddScoped<SpellService>();
+            services.AddScoped<EncounterService>();
+            services.AddScoped<PartialPlayerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

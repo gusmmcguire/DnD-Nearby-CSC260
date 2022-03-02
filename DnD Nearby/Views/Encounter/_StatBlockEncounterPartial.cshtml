@@ -1,0 +1,8 @@
+﻿@model StatBlockEncounterPartialPage
+
+<h4>Name: @Model.statForPage.Name</h4>
+<h4>Race: @Model.statForPage.Race</h4>
+<h4>CR: @Model.statForPage.CR.ToString()</h4>
+    
+
+@Html.ActionLink("Add To Encounter", "AddStatToEncounter", new { creatures = Model.CreatureRef, stat = Model.statForPage.Id})

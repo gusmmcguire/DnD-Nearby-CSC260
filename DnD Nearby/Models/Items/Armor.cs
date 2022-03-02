@@ -9,7 +9,8 @@ namespace DnD_Nearby.Models
     {
         public int ACMod { get; set; }
 
-        public Armor(int id, string name, float cost, string url, bool isEquip, int modifier, int acMod): base(id, name, cost, url, isEquip, modifier)
+        public Armor(int id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquip, int modifier, int acMod) : 
+            base(id, name, cost, descriptUrl, imgUrl, isEquip, modifier)
         {
             this.ACMod = acMod;
         }
