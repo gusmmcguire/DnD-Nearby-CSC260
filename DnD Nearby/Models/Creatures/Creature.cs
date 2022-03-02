@@ -24,7 +24,6 @@ namespace DnD_Nearby.Models
         public string Name { get; set; }
 
         [BsonElement("Race")]
-        [Required]
         public string Race { get; set; }
         //str, dex, con, int, wis, char
         [BsonElement("Attributes")]

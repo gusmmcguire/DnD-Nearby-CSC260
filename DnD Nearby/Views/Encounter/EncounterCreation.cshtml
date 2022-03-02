@@ -1,6 +1,7 @@
 ﻿@model EncounterCreationPage
 @{
-    DnD_Nearby.Models.StatBlockCollectionPartialPage partialPage = new DnD_Nearby.Models.StatBlockCollectionPartialPage(ref Model.creatureIDs, Model.statCollection);
+    StatBlockCollectionPartialPage statPartialPage = new StatBlockCollectionPartialPage(ref Model.creatureIDs, Model.statCollection);
+    PlayerPartialMakerPage playerPartialPage = new PlayerPartialMakerPage(ref Model.creatureIDs);
 }
 
 <form asp-controller="Encounter" asp-action="CreateEncounter">
@@ -19,6 +20,14 @@
 
     <input type="submit" value="Create Encounter" />
 </form>
-<div class="row jumbotron justify-content-center pre-scrollable">
-    <partial name="/Views/StatBlock/_StatBlockCollectionPartial.cshtml" for="@partialPage" />
+<div class="row justify-content-center">
+
+    <div class="col-6 jumbotron justify-content-center pre-scrollable">
+        <partial name="/Views/Encounter/_StatBlockCollectionPartial.cshtml" for="@statPartialPage" />
+    </div>
+    <div class="col-6 jumbotron justify-content-center pre-scrollable">
+
+        <partial name="/Views/Encounter/_PlayerCharacterMakerPartial.cshtml" for="@playerPartialPage">
+    </div>
 </div>
+

@@ -13,14 +13,14 @@ namespace DnD_Nearby.Controllers
         private readonly AccountService accService;
         private readonly EncounterService enService;
         private readonly StatBlockService sbService;
-        private readonly PlayerCharacterService pcService;
+        private readonly PartialPlayerService ppcService;
 
-        public EncounterController(AccountService accIn, EncounterService enIn, StatBlockService sbIn, PlayerCharacterService pcIn)
+        public EncounterController(AccountService accIn, EncounterService enIn, StatBlockService sbIn, PartialPlayerService ppcIn)
         {
             accService = accIn;
             enService = enIn;
             sbService = sbIn;
-            pcService = pcIn;
+            ppcService = ppcIn;
         }
 
         public IActionResult Index()
@@ -32,7 +32,7 @@ namespace DnD_Nearby.Controllers
         {
 
             EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id));
-            ecp.setupString(sbService, pcService);
+            ecp.setupString(sbService, ppcService);
             return View(ecp);
         }
 
@@ -87,17 +87,25 @@ namespace DnD_Nearby.Controllers
             return View("EncounterEditor");
         }
 
-        public IActionResult AddStatToEncounter(List<string> creatures, string stat, string accountName)
+        public IActionResult AddStatToEncounter(List<string> creatures, string stat)
         {
             creatures.Add(stat);
             EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
             creationPage.CreatureIDs = creatures.ToArray();
-            creationPage.setupString(sbService, pcService);
+            creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
         }
-        /*public void AddStat(StatBlock stat, ref StatBlockEncounterPartialPage pageInfo)
+        
+        [HttpPost]
+        public IActionResult AddPlayerToEncounter(PlayerPartialMakerPage playerPartialMakerPage)
         {
-            pageInfo.CreatureRef.Add(stat);
-        }*/
+            ppcService.Create(playerPartialMakerPage.pcForPage);
+            playerPartialMakerPage.CreatureRef.Add(playerPartialMakerPage.pcForPage.Id);
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            creationPage.CreatureIDs = playerPartialMakerPage.CreatureRef.ToArray();
+            creationPage.setupString(sbService, ppcService);
+            return View("EncounterCreation", creationPage);
+        }
     }
 }
+ 
