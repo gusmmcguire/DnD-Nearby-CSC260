@@ -33,6 +33,7 @@ namespace DnD_Nearby.Models
         public int exp { get; set; }
 
         //copper, silver, electrum, gold, platinum
+        [BsonIgnore]
         public Coins coins { get; set; }
 
         public PlayerCharacter() { }
