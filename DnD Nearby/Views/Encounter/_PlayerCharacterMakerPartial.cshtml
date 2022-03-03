@@ -13,7 +13,7 @@
     <input asp-for="pcForPage.MaxHP" placeholder="hp" />
     <span asp-validation-for="pcForPage.MaxHP" class="error-messages alert-danger"></span>
     <br />
-    <label for="AC">Character Max HP:</label>
+    <label for="AC">Character AC:</label>
     <input asp-for="pcForPage.AC" placeholder="ac" />
     <span asp-validation-for="pcForPage.AC" class="error-messages alert-danger"></span>
     <br />
@@ -41,6 +41,10 @@
     <input asp-for="pcForPage.Attributes[5]" placeholder="10" />
     <span asp-validation-for="pcForPage.Attributes[5]" class="error-messages alert-danger"></span>
     <br />
+
+
+
+
     <input hidden asp-for="CreatureRef" value="@Model.CreatureRef" />
     <input type="submit" value="Add To Encounter" />
 

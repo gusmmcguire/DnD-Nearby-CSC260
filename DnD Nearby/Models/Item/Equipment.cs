@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DnD_Nearby.Models
 {
     public class Equipment : Item
     {
+        [BsonElement("IsEquipped")]
         public bool IsEquipped { get; set; }
+        [BsonElement("Modifier")]
         public int Modifier { get; set; }
 
-        public Equipment(int id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped, int modifier) : base(id, name, cost, descriptUrl, imgUrl)
+        public Equipment(string id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped = false, int modifier = 0) : base(id, name, cost, descriptUrl, imgUrl)
         {
             this.IsEquipped = IsEquipped;
             this.Modifier = modifier;

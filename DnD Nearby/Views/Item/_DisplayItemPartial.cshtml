@@ -1,0 +1,16 @@
+﻿@model Item
+@{
+}
+<div class="container container-fluid justify-content-lg-center justify-content-center justify-content-md-center justify-content-sm-center">
+    <div class="text-center text-decoration-none">
+        <h3>@Model.Name</h3>
+        <img class="img-fluid" src="@Model.ImageURL"/>
+        <h4>Cost:</h4>
+        <h5>@Model.Cost.platium</h5>
+        <h5>@Model.Cost.gold</h5>
+        <h5>@Model.Cost.electrum</h5>
+        <h5>@Model.Cost.silver</h5>
+        <h5>@Model.Cost.copper</h5>
+        <a href="@Model.DescriptionURL" class="text-decoration-none">Item Display</a>
+    </div>
+</div>
