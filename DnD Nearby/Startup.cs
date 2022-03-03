@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Services;
+using DnD_Nearby.Models;
+using MongoDB.Bson.Serialization;
 
 namespace DnD_Nearby
 {
@@ -59,6 +61,16 @@ namespace DnD_Nearby
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            BsonClassMap.RegisterClassMap<Coins>(cm =>
+            {
+                cm.MapProperty(coins => coins.Platinum);
+                cm.MapProperty(coins => coins.Gold);
+                cm.MapProperty(coins => coins.Electrum);
+                cm.MapProperty(coins => coins.Silver);
+                cm.MapProperty(coins => coins.Copper);
+                cm.MapCreator(coins => new Coins(coins.Platinum, coins.Gold, coins.Electrum, coins.Silver, coins.Copper));
             });
         }
     }
