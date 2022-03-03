@@ -8,6 +8,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DnD_Nearby.Models
 {
+    [BsonIgnoreExtraElements]
     public class Item
     {
         [BsonId]
@@ -18,7 +19,7 @@ namespace DnD_Nearby.Models
         [Required]
         public string Name { get; set; }
 
-        [BsonElement("Cost")]
+        //[BsonElement("Cost")]
         public Coins Cost { get; set; }
         
         [BsonElement("DescriptionURL")]
