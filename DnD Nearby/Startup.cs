@@ -30,6 +30,7 @@ namespace DnD_Nearby
             services.AddScoped<StatBlockService>();
             services.AddScoped<SpellService>();
             services.AddScoped<EncounterService>();
+            services.AddScoped<PartialPlayerService>();
             services.AddScoped<ItemService>();
         }
 

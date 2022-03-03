@@ -9,7 +9,7 @@ using DnD_Nearby.ValidationAttributes;
 
 namespace DnD_Nearby.Models
 {
-    public abstract class Creature
+    public class Creature
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -24,7 +24,6 @@ namespace DnD_Nearby.Models
         public string Name { get; set; }
 
         [BsonElement("Race")]
-        [Required]
         public string Race { get; set; }
         //str, dex, con, int, wis, char
         [BsonElement("Attributes")]

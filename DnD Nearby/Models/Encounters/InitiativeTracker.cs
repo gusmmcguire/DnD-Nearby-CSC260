@@ -19,11 +19,11 @@ namespace DnD_Nearby.Models
             Creatures = new List<Creature>();
         }
 
-        public InitiativeTracker(int id)
+        public InitiativeTracker(string id)
         {
-            /*Encounter encounter = new Encounter(id);
+            //Encounter encounter = new Encounter(id);
 
-            Creatures = encounter.Creatures;*/
+            //Creatures = encounter.Creatures;
         }
 
         public void NextCreature()

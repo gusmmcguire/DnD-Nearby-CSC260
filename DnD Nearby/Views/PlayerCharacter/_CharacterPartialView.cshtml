@@ -1,12 +1,17 @@
 ﻿@model PlayerCharacter
 
-<h1>@Model.Name</h1>
-<h2>@Model.Race</h2>
-<h2>@Model.Class</h2>
-<h2>Level: @Model.Level</h2>
-<h2>Strength: @Model.Attributes[0]</h2>
-<h2>Dexterity: @Model.Attributes[1]</h2>
-<h2>Constitution: @Model.Attributes[2]</h2>
-<h2>Intelligence: @Model.Attributes[3]</h2>
-<h2>Wisdom: @Model.Attributes[4]</h2>
-<h2>Charisma: @Model.Attributes[5]</h2>
+<div class="jumbotron container">
+    <h1>@Model.Name</h1>
+    <h2>@Model.Race</h2>
+    <h2>@Model.Class</h2>
+    <h2>Level: @Model.Level</h2>
+    <div class="">
+        <h2>Attributes:</h2>
+        <h4>Strength: @Model.Attributes[0]</h4>
+        <h4>Dexterity: @Model.Attributes[1]</h4>
+        <h4>Constitution: @Model.Attributes[2]</h4>
+        <h4>Intelligence: @Model.Attributes[3]</h4>
+        <h4>Wisdom: @Model.Attributes[4]</h4>
+        <h4>Charisma: @Model.Attributes[5]</h4>
+    </div>
+</div>

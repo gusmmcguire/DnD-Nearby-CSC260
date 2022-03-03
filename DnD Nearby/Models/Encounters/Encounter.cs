@@ -7,6 +7,8 @@ using DnD_Nearby.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using DnD_Nearby.Services;
 
 namespace DnD_Nearby.Models
 {
@@ -24,14 +26,22 @@ namespace DnD_Nearby.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ID { get; private set; }
+        public string ID { get; set; }
 
         [BsonElement("account_id")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string accountId { get; set; }
 
-        [BsonElement("creatures")]
-        public List<Creature> Creatures { get; private set; }
+        [BsonElement("encounter_name")]
+        public string encounterName { get; set; }
+
+
+        [BsonElement("creatures_ids")]
+        //[BsonRepresentation(BsonType.Array)]
+        public List<string> CreatureID { get; set; }
+
+        [BsonIgnore]
+        public List<Creature> Creatures { get; set; }
 
         public Encounter()
         {
@@ -76,8 +86,9 @@ namespace DnD_Nearby.Models
         {
             DifficultyRatings partyXPThreshold = CalcPartyXPThreshold();
             int encounterXP = 0;
+            var SBs = Creatures.Where(c => c.GetType() == typeof(StatBlock)).ToList();
 
-            foreach (StatBlock creature in Creatures)
+            foreach (StatBlock creature in SBs)
             { 
                 encounterXP += (int)creature.CR;
             }
@@ -88,27 +99,28 @@ namespace DnD_Nearby.Models
             } 
             else if (encounterXP < partyXPThreshold.Medium)
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.EASY;
             }
             else if (encounterXP < partyXPThreshold.Hard)
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.MEDIUM;
             } 
             else if (encounterXP < partyXPThreshold.Deadly)
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.HARD;
             } 
             else
             {
-                return eDifficulty.VERY_EASY;
+                return eDifficulty.DEADLY;
             }
         }
 
         private DifficultyRatings CalcPartyXPThreshold()
         {
             DifficultyRatings DR = new DifficultyRatings();
+            var PCs = Creatures.Where(c => c.GetType() == typeof(PlayerCharacter));
 
-            foreach (PlayerCharacter player in Creatures)
+            foreach (PlayerCharacter player in PCs)
             {
                 DR.Easy += Thresholds[player.Level].Easy;
                 DR.Medium += Thresholds[player.Level].Medium;
@@ -117,6 +129,40 @@ namespace DnD_Nearby.Models
             }
 
             return DR;
+        }
+
+        //NEEDS CALLED IN CONTROLLER BEFORE RUNNING CALC DIFFICULTY/CALC PARTY XP
+        //TODO:
+        //  REFACTOR BECAUSE WE AREN'T USING ACTUAL PC'S FOR THIS
+        public void setupCreatures(StatBlockService sbS, PartialPlayerService ppcS)
+        {
+            List<StatBlock> stats = sbS.Get();
+            List<PlayerCharacter> players = ppcS.Get();
+            foreach(string id in CreatureID)
+            {
+                bool found = false;
+                foreach(StatBlock stat in stats)
+                {
+                    if(id == stat.Id)
+                    {
+                        Creatures.Add(stat);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    foreach(PlayerCharacter pc in players)
+                    {
+                        if(id == pc.Id)
+                        {
+                            Creatures.Add(pc);
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
