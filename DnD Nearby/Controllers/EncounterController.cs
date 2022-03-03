@@ -100,7 +100,7 @@ namespace DnD_Nearby.Controllers
         public IActionResult Encounter()
         {
             EncounterPage ep = new EncounterPage();
-            ep.encounter.setupCreatures(sbService, ppcService);
+
             return View(ep);
         }
 
