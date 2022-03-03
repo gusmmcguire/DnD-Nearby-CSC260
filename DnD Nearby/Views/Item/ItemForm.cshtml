@@ -1,0 +1,26 @@
+﻿@model Item
+@{
+    string strMethod = "";
+
+    if (ViewBag.Mode == "Edit")
+    {
+        strMethod = "EditItem";
+    }
+    else 
+    {
+        strMethod = "AddItem";
+    }
+}
+<div class="text-center">
+    <form asp-controller="Item" asp-action="@strMethod">
+        <input asp-for="@Model.Name" placeholder="Name"/>
+        <input asp-for="@Model.ImageURL" placeholder="Image URL"/>
+        <input name="PlatiumCost" type="number" placeholder="Platium Cost"/>
+        <input name="GoldCost" type="number" placeholder="Gold Cost"/>
+        <input name="ElectrumCost" type="number" placeholder="Electrum Cost"/>
+        <input name="SilverCost" type="number" placeholder="Silver Cost"/>
+        <input name="CopperCost" type="number" placeholder="Copper Cost"/>
+        <input asp-for="@Model.DescriptionURL" placeholder="Description URL"/>
+        <button type="submit">SAVE</button>
+    </form>
+</div>

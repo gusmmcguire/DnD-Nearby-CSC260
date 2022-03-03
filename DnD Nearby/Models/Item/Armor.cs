@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DnD_Nearby.Models
 {
-    public class Weapon : Equipment
+    public class Armor : Equipment
     {
-        public int DamageMod { get; set; }
+        [BsonElement("ACMod")]
+        public int ACMod { get; set; }
 
-        public Weapon(int id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped, int modifier, int damageMod) : 
-            base(id, name, cost, descriptUrl, imgUrl, isEquipped, modifier)
+        public Armor(string id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquip = false, int modifier = 0, int acMod = 0) : 
+            base(id, name, cost, descriptUrl, imgUrl, isEquip, modifier)
         {
-            this.DamageMod = damageMod;
+            this.ACMod = acMod;
         }
 
         public override void Equip(int[] attributes, int modAttribIndex)
