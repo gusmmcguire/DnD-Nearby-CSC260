@@ -8,54 +8,61 @@ namespace DnD_Nearby.Services
 {
     public class AccountService
     {
-        private readonly IMongoCollection<Account> accounts;
+        private readonly IMongoCollection<ApplicationUser> accounts;
 
         public AccountService(IConfiguration config)
         {
             MongoClient client = new MongoClient(config.GetConnectionString("D&DNearbyDB"));
-            IMongoDatabase database = client.GetDatabase("D&D-Nearby");
-            accounts = database.GetCollection<Account>("Accounts");
+            IMongoDatabase database = client.GetDatabase("Identity");
+            accounts = database.GetCollection<ApplicationUser>("Accounts");
         }
 
-        public List<Account> Get()
+        public List<ApplicationUser> Get()
         {
             return accounts.Find(account => true).ToList();
         }
 
-        public Account GetAccountByName(string username)
+        public ApplicationUser GetAccountByName(string username)
         {
-            return accounts.Find(account => account.Username == username).FirstOrDefault();
+            return accounts.Find(account => account.UserName == username).FirstOrDefault();
         }
 
-        public Account GetAccount(string id)
+        public ApplicationUser GetAccount(string id)
         {
-            return accounts.Find(account => account.Id == id).FirstOrDefault();
+            foreach(var account in accounts.Find(acc => true).ToList())
+            {
+                if(account.Id.ToString().ToUpper() == id.ToUpper())
+                {
+                    return account;
+                }
+            }
+            return null;
         }
 
-        public Account GetAccount(Account acc)
+        public ApplicationUser GetAccount(ApplicationUser acc)
         {
-            return accounts.Find(account => account.Username == acc.Username).FirstOrDefault();
+            return accounts.Find(account => account.UserName == acc.UserName).FirstOrDefault();
         }
 
-        public Account Create(Account account)
+        public ApplicationUser Create(ApplicationUser account)
         {
             accounts.InsertOne(account);
             return account;
         }
 
-        public void Update(string id, Account accountIn)
+        public void Update(string id, ApplicationUser accountIn)
         {
-            accounts.ReplaceOne(account => account.Id == id, accountIn);
+            accounts.ReplaceOne(account => account.Id.ToString().ToUpper() == id, accountIn);
         }
 
-        public void Remove(Account accIn)
+        public void Remove(ApplicationUser accIn)
         {
             accounts.DeleteOne(account => account.Id == accIn.Id);
         }
 
         public void Remove(string id)
         {
-            accounts.DeleteOne(account => account.Id == id);
+            accounts.DeleteOne(account => account.Id.ToString().ToUpper() == id);
         }
     }
 }

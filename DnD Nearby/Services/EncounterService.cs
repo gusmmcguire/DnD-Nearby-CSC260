@@ -24,12 +24,12 @@ namespace DnD_Nearby.Services
 
         public List<Encounter> GetEncountersByAccount(string accountId)
         {
-            return encounters.Find(encounter => encounter.accountId == accountId).ToList();
+            return encounters.Find(encounter => encounter.accountId.ToString() == accountId).ToList();
         }
 
         public Encounter GetEncounter(string id)
         {
-            return encounters.Find(encounter => encounter.accountId == id).FirstOrDefault();
+            return encounters.Find(encounter => encounter.accountId.ToString() == id).FirstOrDefault();
         }
 
         public void Create(Encounter encounter)
