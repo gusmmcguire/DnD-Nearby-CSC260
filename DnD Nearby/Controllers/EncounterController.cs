@@ -32,7 +32,8 @@ namespace DnD_Nearby.Controllers
         public IActionResult EncounterCreation(string user = "admin_test")
         {
 
-            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id));
+            EncounterCreationPage ecp = new EncounterCreationPage();
+            //(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id));
             ecp.setupString(sbService, ppcService);
             return View(ecp);
         }
