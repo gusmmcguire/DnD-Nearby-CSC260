@@ -19,7 +19,7 @@ namespace DnD_Nearby.Models
         [Required]
         public string Name { get; set; }
 
-        //[BsonElement("Cost")]
+        [BsonElement("Cost")]
         public Coins Cost { get; set; }
         
         [BsonElement("DescriptionURL")]
