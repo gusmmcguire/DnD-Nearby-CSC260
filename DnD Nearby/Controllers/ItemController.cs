@@ -27,7 +27,7 @@ namespace DnD_Nearby.Controllers
             if (ModelState.IsValid)
             {
                 ViewBag.Mode = "";
-                int pp = int.Parse(HttpContext.Request.Form["PlatiumCost"]); // Messy, but effective
+                int pp = int.Parse(HttpContext.Request.Form["PlatinumCost"]); // Messy, but effective
                 int gp = int.Parse(HttpContext.Request.Form["GoldCost"]);
                 int ep = int.Parse(HttpContext.Request.Form["ElectrumCost"]);
                 int sp = int.Parse(HttpContext.Request.Form["SilverCost"]);
@@ -45,7 +45,7 @@ namespace DnD_Nearby.Controllers
             if (ModelState.IsValid)
             {
                 ViewBag.Mode = "";
-                int pp = int.Parse(HttpContext.Request.Form["PlatiumCost"]); // Messy, but effective
+                int pp = int.Parse(HttpContext.Request.Form["PlatinumCost"]); // Messy, but effective
                 int gp = int.Parse(HttpContext.Request.Form["GoldCost"]);
                 int ep = int.Parse(HttpContext.Request.Form["ElectrumCost"]);
                 int sp = int.Parse(HttpContext.Request.Form["SilverCost"]);

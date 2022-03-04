@@ -29,8 +29,7 @@ namespace DnD_Nearby.Models
         public string ID { get; set; }
 
         [BsonElement("account_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string accountId { get; set; }
+        public Guid accountId { get; set; }
 
         [BsonElement("encounter_name")]
         public string encounterName { get; set; }
