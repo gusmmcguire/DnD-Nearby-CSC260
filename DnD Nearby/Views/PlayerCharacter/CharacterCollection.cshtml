@@ -7,15 +7,14 @@
     bool hasCharacters = Model != null && Model.Count() > 0;
 }
 
-
+<h2 class="text-center">Character Collection</h2>
 @{
     if (!hasCharacters)
-    {
-        <form asp-controller="PlayerCharacter" asp-action="CharacterCollection">
-            <label for="user">Account Username to Search for</label>
-            <input name="user" placeholder="username"/>
-            <input type="submit" />
-        </form>
+    { 
+        <div class="text-center">
+            <h2>You have no Player Characters on your account</h2>
+            <h3>Go <a asp-controller="StatBlock" asp-action="StatBlockCreation">here</a> to add one!</h3>
+        </div>
     }
     else
     {

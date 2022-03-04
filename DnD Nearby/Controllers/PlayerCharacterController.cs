@@ -5,9 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Services;
 using DnD_Nearby.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DnD_Nearby.Controllers
 {
+    [Authorize]
     public class PlayerCharacterController : Controller
     {
         private readonly AccountService accService;
@@ -19,23 +22,13 @@ namespace DnD_Nearby.Controllers
             accService = aS;
         }
 
-        public IActionResult Index()
-        {
-            return Redirect("/Home/Index");
-        }
-
         public IActionResult CharacterCreation()
         {
             return View();
         }
-        public IActionResult CharacterCollectionForm()
+        public IActionResult CharacterCollection()
         {
-            return View("CharacterCollection");
-        }
-
-        public IActionResult CharacterCollection(string user)
-        {
-            List<PlayerCharacter> tempList = chService.Get().Where(character => character.accountId == accService.GetAccountByName(user).Id).ToList();
+            List<PlayerCharacter> tempList = chService.Get().Where(character => character.accountId == accService.GetAccount(User.FindFirst(ClaimTypes.NameIdentifier).Value).Id).ToList();
 
             return View(tempList);
         }
@@ -55,9 +48,9 @@ namespace DnD_Nearby.Controllers
             if (ModelState.IsValid)
             {
                 //when it comes in here, we will be expecting a username in accId, then updating that
-                ch.accountId = accService.GetAccountByName(ch.accountId).Id;
+                //ch.accountId = accService.GetAccountByName(ch.accountId).Id;
                 chService.Create(ch);
-                return Index();
+                return View("CharacterCollection", chService.Get().Where(character => character.accountId == accService.GetAccount(User.FindFirst(ClaimTypes.NameIdentifier).Value).Id).ToList());
             }
             ViewBag.warning = "something not valid";
             return View("CharacterCreation");

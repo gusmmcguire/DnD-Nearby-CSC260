@@ -5,9 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Models;
 using DnD_Nearby.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DnD_Nearby.Controllers
 {
+    [Authorize]
     public class StatBlockController : Controller
     {
         private readonly AccountService accService;
@@ -19,27 +23,14 @@ namespace DnD_Nearby.Controllers
             accService = aS;
         }
 
-        
-
-        public IActionResult Index()
-        {
-            return Redirect("/Home/Index");
-        }
-
         public IActionResult StatBlockCreation()
         {
             return View();
         }
-        public IActionResult StatBlockCollectionForm()
-        {
-            return View("StatBlockCollection");
-        }
 
-        public IActionResult StatBlockCollection(string user)
+        public IActionResult StatBlockCollection()
         {
-            List<StatBlock> tempList = statService.Get().Where(statBlock => statBlock.accountId == accService.GetAccountByName(user).Id).ToList();
-
-            return View(tempList);
+            return View(statService.Get().Where(stat => stat.accountId.ToString() == User.FindFirst(ClaimTypes.NameIdentifier).Value).ToList());
         }
 
         public IActionResult StatBlockEditor()
@@ -56,10 +47,9 @@ namespace DnD_Nearby.Controllers
         {
             if (ModelState.IsValid)
             {
-                //when it comes in here, we will be expecting a username in accId, then updating that
-                stat.accountId = accService.GetAccountByName(stat.accountId).Id;
+                stat.accountId = accService.GetAccount(stat.accountId.ToString().ToUpper()).Id;
                 statService.Create(stat);
-                return Index();
+                return View("StatBlockCollection", statService.Get().Where(stat => stat.accountId.ToString() == User.FindFirst(ClaimTypes.NameIdentifier).Value).ToList());
             }
             ViewBag.warning = "something not valid";
             return View("StatBlockCreation");
