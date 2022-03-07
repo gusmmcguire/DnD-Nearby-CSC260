@@ -39,11 +39,6 @@ namespace DnD_Nearby.Controllers
             return View(ecp);
         }
 
-        private bool ClaimsType(Claim obj)
-        {
-            throw new NotImplementedException();
-        }
-
         public IActionResult EncounterCollection()
         {
             List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id).ToList();
@@ -118,18 +113,17 @@ namespace DnD_Nearby.Controllers
                 ep.encounter.AddCreature(pc);
             }
             ep.diff = ep.encounter.CalcDifficulty();
-
+            
             return View("Encounter", ep);
         }
 
-        [HttpPost]
-        public IActionResult AddPlayerToEncounter(PlayerPartialMakerPage playerPartialPage)
+        public IActionResult AddPlayerToEncounter(List<string> creatures, PlayerCharacter pcForPage)
         {
-
-            ppcService.Create(playerPartialPage.pcForPage);
-            playerPartialPage.CreatureRef.Add(playerPartialPage.pcForPage.Id);
+            pcForPage.accountId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            ppcService.Create(pcForPage);
+            creatures.Add(pcForPage.Id);
             EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
-            creationPage.CreatureIDs = playerPartialPage.CreatureRef.ToArray();
+            creationPage.CreatureIDs = creatures.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
 
