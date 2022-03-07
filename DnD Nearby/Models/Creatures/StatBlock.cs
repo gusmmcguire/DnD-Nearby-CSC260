@@ -7,6 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 using DnD_Nearby.ValidationAttributes;
 using DnD_Nearby.Enums;
+using System.Security.Claims;
 
 namespace DnD_Nearby.Models
 {
@@ -14,7 +15,6 @@ namespace DnD_Nearby.Models
     {
         [BsonElement("ChallengeRating")]
         public eCR CR { get; set; }
-
         public StatBlock() { }
         public StatBlock(eCR cr, string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, List<Item> inventory = null) : base(name, race, attributes, maxHP, ac, languages, inventory)
         {

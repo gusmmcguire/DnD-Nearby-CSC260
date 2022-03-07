@@ -22,7 +22,6 @@ namespace DnD_Nearby.Models
         public Encounter encounter { get; set; } = new Encounter();
         public List<StatBlock> statCollection { get; set; }
         public string displayString { get; set; }
-        public string accountName { get; set; }
         public PlayerCharacter pc { get; set; }
 
         public void setupString(StatBlockService sbS, PartialPlayerService ppcS)

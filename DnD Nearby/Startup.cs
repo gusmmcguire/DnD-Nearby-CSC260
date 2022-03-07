@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Services;
+using DnD_Nearby.Settings;
+using DnD_Nearby.Models;
 using DnD_Nearby.Models;
 using MongoDB.Bson.Serialization;
 
@@ -26,7 +28,13 @@ namespace DnD_Nearby
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            var mongoDbSettings = Configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(
+                    mongoDbSettings.ConnectionString, mongoDbSettings.Name
+                );
+
             services.AddScoped<AccountService>();
             services.AddScoped<PlayerCharacterService>();
             services.AddScoped<StatBlockService>();
@@ -34,6 +42,7 @@ namespace DnD_Nearby
             services.AddScoped<EncounterService>();
             services.AddScoped<PartialPlayerService>();
             services.AddScoped<ItemService>();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +62,7 @@ namespace DnD_Nearby
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
