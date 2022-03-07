@@ -88,7 +88,7 @@ namespace DnD_Nearby.Controllers
         public IActionResult AddStatToEncounter(List<string> creatures, string stat)
         {
             creatures.Add(stat);
-            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id.ToString()));
             creationPage.CreatureIDs = creatures.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
