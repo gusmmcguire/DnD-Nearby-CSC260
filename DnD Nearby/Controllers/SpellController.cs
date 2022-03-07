@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Models;
 using DnD_Nearby.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DnD_Nearby.Controllers
 {
+    [Authorize]
     public class SpellController : Controller
     {
         private readonly SpellService spService;

@@ -1,6 +1,6 @@
 ﻿@model PlayerPartialMakerPage
 <h2>Input Player Information</h2>
-<form asp-controller="Encounter" asp-action="AddPlayerToEncounter" method="post">
+<form asp-controller="Encounter" asp-action="AddPlayerToEncounter">
 
     <label for="Name">Character Name:</label>
     <input asp-for="pcForPage.Name" placeholder="name" />
@@ -45,8 +45,11 @@
 
 
 
-
-    <input hidden asp-for="CreatureRef" value="@Model.CreatureRef" />
+    @{ for (var i = 0; i < Model.CreatureRef.Count(); i++)
+        {
+            <input hidden asp-for="CreatureRef[i]" value="@Model.CreatureRef[i]" />
+        }
+    }
     <input type="submit" value="Add To Encounter" />
 
 </form>

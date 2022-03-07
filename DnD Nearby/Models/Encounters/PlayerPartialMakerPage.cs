@@ -7,7 +7,7 @@ namespace DnD_Nearby.Models
 {
     public class PlayerPartialMakerPage
     {
-        public List<string> CreatureRef { get; set; } = new List<string>();
+        public List<string> CreatureRef;
         public PlayerCharacter pcForPage { get; set; }
 
         public PlayerPartialMakerPage() { }
