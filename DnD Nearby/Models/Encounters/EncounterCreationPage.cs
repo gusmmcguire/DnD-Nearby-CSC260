@@ -10,10 +10,9 @@ namespace DnD_Nearby.Models
     public class EncounterCreationPage
     {
         public EncounterCreationPage() { }
-        public EncounterCreationPage(List<StatBlock> statBlocks, List<PlayerCharacter> playerCharacters)
+        public EncounterCreationPage(List<StatBlock> statBlocks)
         {
             statCollection = statBlocks;
-
         }
 
 

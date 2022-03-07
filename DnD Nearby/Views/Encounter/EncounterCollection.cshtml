@@ -11,11 +11,10 @@
 @{
     if (!hasStats)
     {
-        <form asp-controller="Encounter" asp-action="EncounterCollection">
-            <label for="user">Account Username to Search for</label>
-            <input name="user" placeholder="username"/>
-            <input type="submit" />
-        </form>
+        <div class="text-center">
+            <h2>You have no Encounter on your account</h2>
+            <h3>Go <a asp-controller="Encounter" asp-action="EncounterCreation">here</a> to add one!</h3>
+        </div>
     }
     else
     {

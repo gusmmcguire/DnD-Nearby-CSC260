@@ -7,7 +7,7 @@
 }
 
 <form asp-controller="Encounter" asp-action="CreateEncounter">
-    <input asp-for="encounter.accountId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" placeholder="username" />
+    <input hidden asp-for="encounter.accountId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" placeholder="username" />
     <br />
     <label for="encounter.enconterName">Name of Encounter</label>
     <input asp-for="encounter.encounterName" placeholder="Name" />

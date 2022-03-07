@@ -34,7 +34,8 @@ namespace DnD_Nearby.Controllers
 
         public IActionResult EncounterCreation()
         {
-            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id.ToString()));
+            var accID = accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id.ToString();
+            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accID));
             ecp.setupString(sbService, ppcService);
             return View(ecp);
         }
@@ -88,7 +89,7 @@ namespace DnD_Nearby.Controllers
         public IActionResult AddStatToEncounter(List<string> creatures, string stat)
         {
             creatures.Add(stat);
-            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get(), ppcService.Get());
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
             creationPage.CreatureIDs = creatures.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
