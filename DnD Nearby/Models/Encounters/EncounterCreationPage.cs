@@ -10,16 +10,16 @@ namespace DnD_Nearby.Models
     public class EncounterCreationPage
     {
         public EncounterCreationPage() { }
-        public EncounterCreationPage(List<StatBlock> statBlocks)
+        public EncounterCreationPage(List<StatBlock> statBlocks, List<PlayerCharacter> playerCharacters)
         {
-            encounter = new Encounter();
             statCollection = statBlocks;
+
         }
 
 
         public List<string> creatureIDs = new List<string>();
         public string[] CreatureIDs { get { return creatureIDs.ToArray(); } set { creatureIDs = value.ToList(); } }
-        public Encounter encounter { get; set; }
+        public Encounter encounter { get; set; } = new Encounter();
         public List<StatBlock> statCollection { get; set; }
         public string displayString { get; set; }
         public string accountName { get; set; }

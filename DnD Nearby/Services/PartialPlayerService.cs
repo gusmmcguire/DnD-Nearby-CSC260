@@ -32,6 +32,11 @@ namespace DnD_Nearby.Services
             return characters.Find(character => character.Name == ch.Name).FirstOrDefault();
         }
 
+        public List<PlayerCharacter> GetStatBlocksByAccount(string userId)
+        {
+            return characters.Find(pc => pc.accountId == userId).ToList();
+        }
+
         public PlayerCharacter Create(PlayerCharacter character)
         {
             characters.InsertOne(character);

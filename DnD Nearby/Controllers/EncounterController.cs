@@ -32,7 +32,7 @@ namespace DnD_Nearby.Controllers
         public IActionResult EncounterCreation(string user = "admin_test")
         {
 
-            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id));
+            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id), ppcService.GetByAccount(accService.GetAccountByName(user).Id));
             ecp.setupString(sbService, ppcService);
             return View(ecp);
         }
@@ -91,7 +91,7 @@ namespace DnD_Nearby.Controllers
         public IActionResult AddStatToEncounter(List<string> creatures, string stat)
         {
             creatures.Add(stat);
-            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get(), ppcService.Get());
             creationPage.CreatureIDs = creatures.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
@@ -126,11 +126,32 @@ namespace DnD_Nearby.Controllers
 
             ppcService.Create(playerPartialPage.pcForPage);
             playerPartialPage.CreatureRef.Add(playerPartialPage.pcForPage.Id);
-            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get(), ppcService.Get());
             creationPage.CreatureIDs = playerPartialPage.CreatureRef.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
+        }
 
+        public IActionResult InitiativeTracker()
+        {
+            InitiativePage ip = new InitiativePage();
+            InitiativeTracker it = new InitiativeTracker();
+
+            List<Creature> Creatures = new List<Creature>
+            {
+                new StatBlock(eCR.Eight, "Your mom", "Human", new int[]{ 10, 10, 10, 10, 10, 10 }, 126, 13, new List<string>(){ "Common" }),
+                new StatBlock(eCR.Eight, "Your dad", "Human", new int[]{ 10, 10, 10, 10, 10, 10 }, 126, 13, new List<string>(){ "Common" }),
+                new PlayerCharacter("You", "Human", new int[]{ 20, 20, 20, 20, 20, 20}, 115, 18, new List<string>{ "Common" }, "Goose", "Paladin", 20, "Dead", new List<string>{ "Feet" })
+            };
+
+            it.encounterName = "The battle of the Home";
+            var rand = new Random();
+            foreach (Creature creature in Creatures)
+            {
+                it.AddCreature(creature, rand.Next(1, 21));
+            }
+            //ip.encounter.setupCreatures(sbService, ppcService);
+            return View(ip);
         }
     }
 }
