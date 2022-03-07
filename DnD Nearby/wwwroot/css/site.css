@@ -8,6 +8,10 @@ a.navbar-brand {
   color: #24d438;
 }
 
+.style-Boi{
+    background-color: slategrey !important;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: forestgreen;
