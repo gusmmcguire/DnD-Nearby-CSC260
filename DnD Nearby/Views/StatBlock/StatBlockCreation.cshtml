@@ -7,80 +7,78 @@
 <h3 class="alert-danger">@warning</h3>
 <form asp-controller="StatBlock" asp-action="CreateStatBlock">
     <input hidden asp-for="accountId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" placeholder="Username" />
-    <label for="Name">Character Name:</label>
-    <input asp-for="Name" placeholder="name" />
-    <span asp-validation-for="Name" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Race">Character Race:</label>
-    <input asp-for="Race" placeholder="race" />
-    <span asp-validation-for="Race" class="error-messages alert-danger"></span>
-    <br />
-    <label for="MaxHP">Character Max HP:</label>
-    <input asp-for="MaxHP" placeholder="hp" />
-    <span asp-validation-for="MaxHP" class="error-messages alert-danger"></span>
-    <br />
-    <label for="AC">Armor Class:</label>
-    <input asp-for="AC" placeholder="ac" />
-    <span asp-validation-for="AC" class="error-messages alert-danger"></span>
-    <br />
-    <label for="CR">Challenge Rating: </label>
-    <select asp-for="CR">
-        <option value="0">0</option>
-        <option value="25">1/8</option>
-        <option value="50">1/4</option>
-        <option value="100">1/2</option>
-        <option value="200">1</option>
-        <option value="450">2</option>
-        <option value="700">3</option>
-        <option value="1100">4</option>
-        <option value="1800">5</option>
-        <option value="2300">6</option>
-        <option value="2900">7</option>
-        <option value="3900">8</option>
-        <option value="5000">9</option>
-        <option value="5900">10</option>
-        <option value="7200">11</option>
-        <option value="8400">12</option>
-        <option value="10000">13</option>
-        <option value="11500">14</option>
-        <option value="13000">15</option>
-        <option value="15000">16</option>
-        <option value="18000">17</option>
-        <option value="20000">18</option>
-        <option value="22000">19</option>
-        <option value="25000">20</option>
-        <option value="33000">21</option>
-        <option value="41000">22</option>
-        <option value="50000">23</option>
-        <option value="62000">24</option>
-        <option value="115000">30</option>
-    </select>
-    <br />
-    <label for="Attributes[0]">Strength Attribute:</label>
-    <input asp-for="Attributes[0]" placeholder="10" />
-    <span asp-validation-for="Attributes[0]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[1]">Dexterity Attribute:</label>
-    <input asp-for="Attributes[1]" placeholder="10" />
-    <span asp-validation-for="Attributes[1]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[2]">Constitution Attribute:</label>
-    <input asp-for="Attributes[2]" placeholder="10" />
-    <span asp-validation-for="Attributes[2]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[3]">Intelligence Attribute:</label>
-    <input asp-for="Attributes[3]" placeholder="10" />
-    <span asp-validation-for="Attributes[3]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[4]">Wisdom Attribute:</label>
-    <input asp-for="Attributes[4]" placeholder="10" />
-    <span asp-validation-for="Attributes[4]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[5]">Charisma Attribute:</label>
-    <input asp-for="Attributes[5]" placeholder="10" />
-    <span asp-validation-for="Attributes[5]" class="error-messages alert-danger"></span>
-    <br />
-
-    <input type="submit" />
+    <div class="row text-center">
+        <div class="float-left border-green rounded m-1 p-3 col-sm-3 text-center">
+            <input asp-for="Attributes[0]" placeholder="STR" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[0]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[1]" placeholder="DEX" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[1]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[2]" placeholder="CON" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[2]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[3]" placeholder="INT" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[3]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[4]" placeholder="WIS" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[4]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[5]" placeholder="CHA" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[5]" class="error-messages alert-danger"></span>
+            <br />
+            <input type="submit" class="col-sm-8 m-2 btn btn-primary" />
+        </div>
+        <div class="float-left border-green rounded m-1 p-3 col-sm-3 text-center">
+            <input asp-for="Name" placeholder="Name" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Name" class="error-messages alert-danger"></span>
+            <br />
+            <br />
+            <input asp-for="Race" placeholder="Race" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Race" class="error-messages alert-danger"></span>
+            <br />
+            <br />
+            <input asp-for="MaxHP" placeholder="MAX HP" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="MaxHP" class="error-messages alert-danger"></span>
+            <br />
+            <br />
+            <input asp-for="AC" placeholder="AC" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="AC" class="error-messages alert-danger"></span>
+            <br />
+            <label for="CR">Challenge Rating: </label>
+            <select asp-for="CR" class="rounded border-green m-2">
+                <option value="0">0</option>
+                <option value="25">1/8</option>
+                <option value="50">1/4</option>
+                <option value="100">1/2</option>
+                <option value="200">1</option>
+                <option value="450">2</option>
+                <option value="700">3</option>
+                <option value="1100">4</option>
+                <option value="1800">5</option>
+                <option value="2300">6</option>
+                <option value="2900">7</option>
+                <option value="3900">8</option>
+                <option value="5000">9</option>
+                <option value="5900">10</option>
+                <option value="7200">11</option>
+                <option value="8400">12</option>
+                <option value="10000">13</option>
+                <option value="11500">14</option>
+                <option value="13000">15</option>
+                <option value="15000">16</option>
+                <option value="18000">17</option>
+                <option value="20000">18</option>
+                <option value="22000">19</option>
+                <option value="25000">20</option>
+                <option value="33000">21</option>
+                <option value="41000">22</option>
+                <option value="50000">23</option>
+                <option value="62000">24</option>
+                <option value="115000">30</option>
+            </select>
+        </div>
+    </div>
+    
 
 </form>
