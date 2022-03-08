@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DnD_Nearby.Enums;
 
 namespace DnD_Nearby.Models
 {
-    public class InitiativePage
+    public class CreatureInitPage
     {
-        public InitiativeTracker initTracker;
+        public KeyValuePair<Creature, int> CreatureInitiatives { get; set; }
     }
 }

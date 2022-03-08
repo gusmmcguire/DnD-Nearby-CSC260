@@ -1,0 +1,14 @@
+﻿@model CreatureInitPage
+
+<div class="jumbotron container">
+    <h1>@Model.CreatureInitiatives.Key.Name</h1>
+    <h2>@Model.CreatureInitiatives.Key.Race</h2>
+    @if (Model.CreatureInitiatives.Key.GetType() == typeof(StatBlock))
+    { 
+        <h3>@(((StatBlock)(Model.CreatureInitiatives.Key)).CR.ToString())</h3>
+    }else
+    {
+        <h3>@(((PlayerCharacter)(Model.CreatureInitiatives.Key)).Level)</h3>
+    }
+    <h3>Initiative: @Model.CreatureInitiatives.Value</h3>
+</div>
