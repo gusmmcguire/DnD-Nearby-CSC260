@@ -3,4 +3,8 @@
 <div class="jumbotron container">
     <h3>@Model.encounterName</h3>
     <h4>Number of Creatures: @Model.CreatureID.Count</h4>
+    <form asp-controller="Encounter" asp-action="SingleEncounter">
+        <input hidden name="encounterID" value="@Model.ID" />
+        <input type="submit" value="View"/>
+    </form>
 </div>

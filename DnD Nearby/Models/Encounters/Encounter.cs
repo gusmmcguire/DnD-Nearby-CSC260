@@ -40,7 +40,7 @@ namespace DnD_Nearby.Models
         public List<string> CreatureID { get; set; }
 
         [BsonIgnore]
-        public List<Creature> Creatures { get; set; }
+        public List<Creature> Creatures { get; set; } = new List<Creature>();
 
         public Encounter()
         {
@@ -121,10 +121,10 @@ namespace DnD_Nearby.Models
 
             foreach (PlayerCharacter player in PCs)
             {
-                DR.Easy += Thresholds[player.Level].Easy;
-                DR.Medium += Thresholds[player.Level].Medium;
-                DR.Hard += Thresholds[player.Level].Hard;
-                DR.Deadly += Thresholds[player.Level].Deadly;
+                DR.Easy += Thresholds[player.Level - 1].Easy;
+                DR.Medium += Thresholds[player.Level - 1].Medium;
+                DR.Hard += Thresholds[player.Level - 1].Hard;
+                DR.Deadly += Thresholds[player.Level - 1].Deadly;
             }
 
             return DR;
