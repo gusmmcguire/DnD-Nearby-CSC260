@@ -8,6 +8,10 @@ a.navbar-brand {
   color: #24d438;
 }
 
+.style-Boi{
+    background-color: slategrey !important;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: forestgreen;
@@ -53,7 +57,7 @@ html {
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem forestgreen;
+  box-shadow: 0 .25rem .75rem #26e126;
 }
 
 button.accept-policy {
