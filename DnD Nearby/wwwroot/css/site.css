@@ -18,9 +18,15 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #2a2a2a;
+    border-color: forestgreen;
+}
+
+.btn-primary:hover{
+    color: #fff;
+    background-color: forestgreen;
+    border-color: forestgreen;
 }
 
 a:link{
@@ -46,14 +52,14 @@ html {
 }
 
 .border-top {
-  border-top: 1px solid forestgreen;
+    border-top: 1px solid #26e126;
 }
 .border-bottom {
-  border-bottom: 1px solid forestgreen;
+    border-bottom: 1px solid #26e126;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem forestgreen;
+    box-shadow: 0 .25rem .75rem #26e126;
 }
 
 button.accept-policy {
@@ -88,4 +94,16 @@ body {
 .background-dark {
     background-color: #1a1a1a;
     color: white;
+}
+
+.background-green {
+    background-color: forestgreen;
+}
+
+.border-green {
+    border: 2px solid forestgreen;
+}
+
+.border-top-green {
+    border-top: 2px solid forestgreen !important;
 }
