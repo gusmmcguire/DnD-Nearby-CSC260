@@ -134,7 +134,7 @@ namespace DnD_Nearby.Controllers
             pcForPage.accountId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             ppcService.Create(pcForPage);
             creatures.Add(pcForPage.Id);
-            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id.ToString()));
             creationPage.CreatureIDs = creatures.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
