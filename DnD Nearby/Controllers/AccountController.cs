@@ -28,6 +28,7 @@ namespace DnD_Nearby.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Profile()
         {
             return View();

@@ -41,7 +41,11 @@ namespace DnD_Nearby.Controllers
                     Email = user.Email
                 };
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
-                if (result.Succeeded) ViewBag.Message = "User Created Successfully";
+                if (result.Succeeded)
+                {
+                    ViewBag.Message = "User Created Successfully";
+                    return Redirect("/Account/Profile");
+                }
                 else
                 {
                     foreach (IdentityError error in result.Errors)
