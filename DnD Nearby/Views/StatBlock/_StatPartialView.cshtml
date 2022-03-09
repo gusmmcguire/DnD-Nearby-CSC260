@@ -1,9 +1,10 @@
 ﻿@model StatBlock
 
 <div class="jumbotron container bg-dark text-white border-green">
-    <h1>@Model.Name</h1>
-    <h2>@Model.Race</h2>
-    <h2>@Model.CR.ToString()</h2>
+    <h1>Name: @Model.Name</h1>
+    <h2>Race: @Model.Race</h2>
+    <h2>Challenge Rating: @Model.CR.ToString()</h2>
+    <h2>Armor Class: @Model.AC.ToString()</h2>
     <h4>Attributes:</h4>
     <div class="row">
         <span class="col">Strength: @Model.Attributes[0] </span>
