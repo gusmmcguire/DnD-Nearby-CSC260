@@ -51,9 +51,20 @@ namespace DnD_Nearby.Controllers
             return View();
         }
 
-        public IActionResult SingleEncounter(Encounter en)
+        public IActionResult SingleEncounter(string encounterID)
         {
-            return View(en);
+            Encounter en = enService.Get().FirstOrDefault(encounter => encounter.ID == encounterID);
+
+            if (en != null)
+            {
+                en.setupCreatures(sbService, ppcService);
+                EncounterPage ep = new EncounterPage(en);
+                return View("Encounter", ep);
+            }
+            else
+            {
+                return View("EncounterCollection");
+            } 
         }
 
         public IActionResult CreateEncounter(EncounterCreationPage enP)
@@ -80,7 +91,7 @@ namespace DnD_Nearby.Controllers
             if (ModelState.IsValid)
             {
                 enService.Update(en.ID, en);
-                return SingleEncounter(en);
+                return SingleEncounter(en.ID);
             }
             ViewBag.warning = "something invalid";
             return View("EncounterEditor");

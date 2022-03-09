@@ -8,57 +8,64 @@
 <form asp-controller="PlayerCharacter" asp-action="CreateCharacter">
     <input hidden asp-for="accountId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" placeholder="Username" />
     <br />
-    <div>
+    <div class="row">
+        <div class="border-green rounded m-1 p-3 col-sm-3 text-center">
+            <input asp-for="Attributes[0]" placeholder="STR" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[0]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[1]" placeholder="DEX" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[1]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[2]" placeholder="CON" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[2]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[3]" placeholder="INT" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[3]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[4]" placeholder="WIS" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[4]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[5]" placeholder="CHA" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[5]" class="error-messages alert-danger"></span>
+            <br />
+            <input type="submit" class="col-sm-8 m-2 btn btn-primary" />
+        </div>
+        <div class="border-green rounded m-1 p-3 col">
+            <div class="row text-center border-bottom-green">
+                <div class="text-center col">
+                    <input asp-for="Player" placeholder="Player Name" class="rounded border-green col-sm-3 m-3" />
+                    <span asp-validation-for="Player" class="error-messages alert-danger"></span>
+                    <input asp-for="Name" placeholder="Character Name" class="rounded border-green col-sm-3 m-3" />
+                    <span asp-validation-for="Name" class="error-messages alert-danger"></span>
+                    <input asp-for="Race" placeholder="Race" class="rounded border-green col-sm-3 m-3" />
+                    <span asp-validation-for="Race" class="error-messages alert-danger"></span>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <input asp-for="MaxHP" placeholder="Max HP" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="MaxHP" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="Class" placeholder="Class" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="Class" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="exp" placeholder="Exp" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="exp" class="error-messages alert-danger"></span>
+                </div>
+                <div class="col">
+                    <input asp-for="AC" placeholder="AC" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="AC" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="Background" placeholder="Background" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="Background" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="Level" placeholder="Level" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="Level" class="error-messages alert-danger"></span>
+                </div>
+            </div>
 
+        </div>
     </div>
-    <div class="float-left border-green rounded m-1">
-        <input asp-for="Attributes[0]" placeholder="STR" class="rounded border-green m-3"/>
-        <span asp-validation-for="Attributes[0]" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="Attributes[1]" placeholder="DEX" class="rounded border-green m-3"/>
-        <span asp-validation-for="Attributes[1]" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="Attributes[2]" placeholder="CON" class="rounded border-green m-3"/>
-        <span asp-validation-for="Attributes[2]" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="Attributes[3]" placeholder="INT" class="rounded border-green m-3"/>
-        <span asp-validation-for="Attributes[3]" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="Attributes[4]" placeholder="WIS" class="rounded border-green m-3"/>
-        <span asp-validation-for="Attributes[4]" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="Attributes[5]" placeholder="CHA" class="rounded border-green m-3"/>
-        <span asp-validation-for="Attributes[5]" class="error-messages alert-danger"></span>
-        <br />
-        <input type="submit" class="col-md-10 m-3 btn btn-primary"/>
-    </div>
-    <div class="border-green float-left rounded m-1">
-
-        <input asp-for="Player" placeholder="Player Name" class="rounded border-green m-3" />
-        <span asp-validation-for="Player" class="error-messages alert-danger"></span>
-
-        <input asp-for="Name" placeholder="Character Name" class="rounded border-green m-3" />
-        <span asp-validation-for="Name" class="error-messages alert-danger"></span>
-
-        <input asp-for="Race" placeholder="Race" class="rounded border-green m-3" />
-        <span asp-validation-for="Race" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="MaxHP" placeholder="Max HP" class="rounded border-green m-3" />
-        <span asp-validation-for="MaxHP" class="error-messages alert-danger"></span>
-
-        <input asp-for="AC" placeholder="AC" class="rounded border-green m-3" />
-        <span asp-validation-for="AC" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="Class" placeholder="Class" class="rounded border-green m-3" />
-        <span asp-validation-for="Class" class="error-messages alert-danger"></span>
-
-        <input asp-for="Background" placeholder="Background" class="rounded border-green m-3" />
-        <span asp-validation-for="Background" class="error-messages alert-danger"></span>
-        <br />
-        <input asp-for="Level" placeholder="Level" class="rounded border-green m-3" />
-        <span asp-validation-for="Level" class="error-messages alert-danger"></span>
-
-        <input asp-for="exp" placeholder="Exp" class="rounded border-green m-3" />
-        <span asp-validation-for="exp" class="error-messages alert-danger"></span>
-    </div>
+    
+    
 </form>

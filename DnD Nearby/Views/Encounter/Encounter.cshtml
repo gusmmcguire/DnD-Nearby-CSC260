@@ -1,6 +1,8 @@
 ﻿@model EncounterPage
 @{
     ViewData["Title"] = "Encounter";
+    int sbIndex = 0;
+    int pcIndex = 0;
 }
 
 @functions{
@@ -39,44 +41,47 @@
     {
         if (creature.GetType() == typeof(PlayerCharacter))
         {
+            
             Model.PlayerCharacters.Add(creature as PlayerCharacter);
-            int index = Model.PlayerCharacters.IndexOf(Model.PlayerCharacters.Last());
             <!--Creature Fields-->
-            <input hidden asp-for="PlayerCharacters[index].Id" value="@Model.PlayerCharacters[index].Id" />
-            <input hidden asp-for="PlayerCharacters[index].accountId" value="@Model.PlayerCharacters[index].accountId" />
-            <input hidden asp-for="PlayerCharacters[index].Name" value="@Model.PlayerCharacters[index].Name" />
-            <input hidden asp-for="PlayerCharacters[index].MaxHP" value="@Model.PlayerCharacters[index].MaxHP" />
-            <input hidden asp-for="PlayerCharacters[index].CurrentHP" value="@Model.PlayerCharacters[index].CurrentHP" />
-            <input hidden asp-for="PlayerCharacters[index].AC" value="@Model.PlayerCharacters[index].AC" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].Id" value="@Model.PlayerCharacters[pcIndex].Id" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].accountId" value="@Model.PlayerCharacters[pcIndex].accountId" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].Name" value="@Model.PlayerCharacters[pcIndex].Name" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].MaxHP" value="@Model.PlayerCharacters[pcIndex].MaxHP" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].CurrentHP" value="@Model.PlayerCharacters[pcIndex].CurrentHP" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].AC" value="@Model.PlayerCharacters[pcIndex].AC" />
             for (int i = 0; i < 6; i++)
             {
-                <input hidden asp-for="PlayerCharacters[index].Attributes[i]" value="@Model.PlayerCharacters[index].Attributes[i]" />
+                <input hidden asp-for="PlayerCharacters[pcIndex].Attributes[i]" value="@Model.PlayerCharacters[pcIndex].Attributes[i]" />
             }
 
             <!--PC Fields-->
-            <input hidden asp-for="PlayerCharacters[index].Player" value="@Model.PlayerCharacters[index].Player" />
-            <input hidden asp-for="PlayerCharacters[index].Class" value="@Model.PlayerCharacters[index].Class" />
-            <input hidden asp-for="PlayerCharacters[index].Level" value="@Model.PlayerCharacters[index].Level" />
-            <input hidden asp-for="PlayerCharacters[index].exp" value="@Model.PlayerCharacters[index].exp" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].Player" value="@Model.PlayerCharacters[pcIndex].Player" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].Class" value="@Model.PlayerCharacters[pcIndex].Class" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].Level" value="@Model.PlayerCharacters[pcIndex].Level" />
+            <input hidden asp-for="PlayerCharacters[pcIndex].exp" value="@Model.PlayerCharacters[pcIndex].exp" />
+
+            pcIndex++;
         }
         else
         {
             Model.StatBlocks.Add(creature as StatBlock);
-            int index = Model.StatBlocks.IndexOf(Model.StatBlocks.Last());
             <!--Creature Fields-->
-            <input hidden asp-for="StatBlocks[index].Id" value="@Model.StatBlocks[index].Id" />
-            <input hidden asp-for="StatBlocks[index].accountId" value="@Model.StatBlocks[index].accountId" />
-            <input hidden asp-for="StatBlocks[index].Name" value="@Model.StatBlocks[index].Name" />
-            <input hidden asp-for="StatBlocks[index].MaxHP" value="@Model.StatBlocks[index].MaxHP" />
-            <input hidden asp-for="StatBlocks[index].CurrentHP" value="@Model.StatBlocks[index].CurrentHP" />
-            <input hidden asp-for="StatBlocks[index].AC" value="@Model.StatBlocks[index].AC" />
+            <input hidden asp-for="StatBlocks[sbIndex].Id" value="@Model.StatBlocks[sbIndex].Id" />
+            <input hidden asp-for="StatBlocks[sbIndex].accountId" value="@Model.StatBlocks[sbIndex].accountId" />
+            <input hidden asp-for="StatBlocks[sbIndex].Name" value="@Model.StatBlocks[sbIndex].Name" />
+            <input hidden asp-for="StatBlocks[sbIndex].MaxHP" value="@Model.StatBlocks[sbIndex].MaxHP" />
+            <input hidden asp-for="StatBlocks[sbIndex].CurrentHP" value="@Model.StatBlocks[sbIndex].CurrentHP" />
+            <input hidden asp-for="StatBlocks[sbIndex].AC" value="@Model.StatBlocks[sbIndex].AC" />
             for (int i = 0; i < 6; i++)
             {
-                <input hidden asp-for="StatBlocks[index].Attributes[i]" value="@Model.StatBlocks[index].Attributes[i]" />
+                <input hidden asp-for="StatBlocks[sbIndex].Attributes[i]" value="@Model.StatBlocks[sbIndex].Attributes[i]" />
             }
 
             <!--SB Fields-->
-            <input hidden asp-for="StatBlocks[index].CR" value="@Model.StatBlocks[index].CR" />
+            <input hidden asp-for="StatBlocks[sbIndex].CR" value="@Model.StatBlocks[sbIndex].CR" />
+            
+            sbIndex++;
         }
     }
     <input type="submit" value="Calculate Difficulty" />

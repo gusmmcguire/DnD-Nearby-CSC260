@@ -8,6 +8,9 @@ namespace DnD_Nearby.Models
 {
     public class EncounterPage
     {
+        public EncounterPage() { }
+        public EncounterPage(Encounter en) { encounter = en; }
+        
         private Encounter _encounter = new Encounter();
         public Encounter encounter { get { return _encounter; } set { _encounter = value; } }
 
