@@ -1,21 +1,25 @@
 ﻿@model Spell
-<div class="bg-light text-dark m-2 p-2 rounded">
+<div class="border-green text-light m-2 p-2 rounded">
 
-    <h2>Spell partial view</h2>
-    <h2>@Model.spellName</h2>
-    @if (Model.spellLevel == 0)
-    {
-        <h2>Cantrip</h2>
-    }
-    else
-    {
-        <h2>Spell Level: @Model.spellLevel</h2>
-    }
-    <h3>School: @Model.spellSchool</h3>
-    <h3>Casting Time: @Model.spellCast</h3>
-    <h3>Range: @Model.spellRange</h3>
-    <h3>Duration: @Model.spellDuration</h3>
-    <h3>Components: @Model.spellComponent</h3>
-    <h3>Spell acuired by: @Model.aquiredClasses</h3>
+    <div class="border-bottom-green">
+        <div class="text-center border-bottom-green">
+            <h2>@Model.spellName</h2>
+            @if (Model.spellLevel == 0)
+            {
+                <h5>Cantrip</h5>
+            }
+            else
+            {
+                <h5>Spell Level: @Model.spellLevel</h5>
+            }
+        </div>
+        
+        <h5>School: @Model.spellSchool</h5>
+        <h5>Casting Time: @Model.spellCast</h5>
+        <h5>Range: @Model.spellRange</h5>
+        <h5>Duration: @Model.spellDuration</h5>
+        <h5>Components: @Model.spellComponent</h5>
+        <h5>Spell acuired by: @Model.aquiredClasses</h5>
+    </div>
     <h4>@Model.spellDescription</h4>
 </div>
