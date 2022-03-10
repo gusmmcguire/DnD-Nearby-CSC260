@@ -64,6 +64,7 @@ namespace DnD_Nearby.Models
             this.CurrentHP = MaxHP;
             this.Languages = other.Languages;
             this.Inventory = other.Inventory;
+            this.AC = other.AC;
         }
         public Creature(string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, List<Item> inventory = null)
         {
@@ -74,6 +75,7 @@ namespace DnD_Nearby.Models
             this.CurrentHP = maxHP;
             this.Languages = languages;
             this.Inventory = inventory;
+            this.AC = ac;
         }
 
         public virtual int[] CalcAttributeMods()
