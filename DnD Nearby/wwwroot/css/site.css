@@ -56,10 +56,10 @@ html {
 }
 
 .border-top {
-    border-top: 1px solid #26e126;
+    border-top: 1px solid forestgreen;
 }
 .border-bottom {
-    border-bottom: 1px solid #26e126;
+    border-bottom: 1px solid forestgreen;
 }
 
 .box-shadow {
@@ -110,4 +110,8 @@ body {
 
 .border-top-green {
     border-top: 2px solid forestgreen !important;
+}
+
+.border-bottom-green {
+    border-bottom: 2px solid forestgreen !important;
 }
