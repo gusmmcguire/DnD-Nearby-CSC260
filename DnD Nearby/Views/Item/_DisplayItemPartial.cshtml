@@ -36,9 +36,5 @@
         <h5>SP: @Model.Cost.Silver</h5>
         <h5>CP: @Model.Cost.Copper</h5>
         <a href="@Model.DescriptionURL" class="text-decoration-none">Item Discription</a>
-        <form asp-controller="Item" asp-action="DeleteItem">
-            <input asp-for="Id" value="@Model.Id" hidden/>
-            <button type="submit">DELETE</button>
-        </form>
     </div>
 </div>

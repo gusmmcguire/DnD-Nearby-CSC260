@@ -29,28 +29,28 @@ namespace DnD_Nearby.Controllers
             if (ModelState.IsValid)
             {
                 ViewBag.Mode = "";
-                switch (itemPage.ItemType)
+                switch (ViewBag.ItemType)
                 {
-                    case Enums.eItemType.ARMOR:
+                    case "ARMOR":
                         Armor a = (Armor)itemPage.Item;
                         a.Modifier = int.Parse(HttpContext.Request.Form["Modifier"]);
                         a.ACMod = int.Parse(HttpContext.Request.Form["ACMod"]);
                         itemService.Create(a);
                         break;
-                    case Enums.eItemType.EQUIPMENT:
+                    case "EQUIPMENT":
                         Equipment e = (Equipment)itemPage.Item;
                         e.Modifier = int.Parse(HttpContext.Request.Form["Modifier"]);
                         itemService.Create(e);
                         break;
-                    case Enums.eItemType.FOOD:
+                    case "FOOD":
                         Food f = (Food)itemPage.Item;
                         itemService.Create(f);
                         break;
-                    case Enums.eItemType.TOOL:
+                    case "TOOL":
                         Tool t = (Tool)itemPage.Item;
                         itemService.Create(t);
                         break;
-                    case Enums.eItemType.WEAPON:
+                    case "WEAPON":
                         Weapon w = (Weapon)itemPage.Item;
                         w.Modifier = int.Parse(HttpContext.Request.Form["Modifier"]);
                         w.DamageMod = int.Parse(HttpContext.Request.Form["DamageMod"]);
@@ -105,7 +105,7 @@ namespace DnD_Nearby.Controllers
 
         public IActionResult ReloadItemForm(ItemPage itemPage)
         {
-            /*switch (itemPage.ItemType)
+            switch (itemPage.ItemType)
             {
                 case Enums.eItemType.ITEM:
                     ViewBag.ItemType = "ITEM";
@@ -125,7 +125,7 @@ namespace DnD_Nearby.Controllers
                 case Enums.eItemType.TOOL:
                     ViewBag.ItemType = "TOOL";
                     break;
-            }*/
+            }
             return View("ItemForm", itemPage);
         }
 
