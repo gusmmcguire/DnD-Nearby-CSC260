@@ -1,10 +1,10 @@
 ﻿@model Encounter
 
-<div class="jumbotron container">
+<div class="jumbotron container text-dark box-shadow style-Boi">
     <h3>@Model.encounterName</h3>
     <h4>Number of Creatures: @Model.CreatureID.Count</h4>
     <form asp-controller="Encounter" asp-action="SingleEncounter">
         <input hidden name="encounterID" value="@Model.ID" />
-        <input type="submit" value="View"/>
+        <input type="submit" value="View" class="btn btn-primary"/>
     </form>
 </div>
