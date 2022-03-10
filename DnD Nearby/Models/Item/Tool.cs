@@ -12,11 +12,11 @@ namespace DnD_Nearby.Models
         [BsonElement("Components")]
         public List<Item> Components { get; private set; } = new List<Item>();
 
-        public Tool(string name, Coins cost, string descriptUrl, string imgUrl) : base(name, cost, descriptUrl, imgUrl)
+        public Tool(string id, string name, Coins cost, string descriptUrl, string imgUrl) : base(id, name, cost, descriptUrl, imgUrl)
         {
         }
 
-        public Tool(string name, Coins cost, string descriptUrl, string imgUrl, List<Item> components = null) : base(name, cost, descriptUrl, imgUrl)
+        public Tool(string id, string name, Coins cost, string descriptUrl, string imgUrl, List<Item> components = null) : base(id, name, cost, descriptUrl, imgUrl)
         {
             this.Components = components;
         }

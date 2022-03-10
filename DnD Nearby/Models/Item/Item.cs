@@ -28,7 +28,8 @@ namespace DnD_Nearby.Models
         public string ImageURL { get; set; }
 
         public Item() { }
-        public Item(string name, Coins cost, string descriptUrl, string imgUrl) {
+        public Item(string id, string name, Coins cost, string descriptUrl, string imgUrl) {
+            this.Id = id;
             this.Name = name;
             this.Cost = cost;
             this.DescriptionURL = descriptUrl;
