@@ -22,52 +22,109 @@ namespace DnD_Nearby.Controllers
             return View(itemService.Get());
         }
 
-        public IActionResult AddItem(Item item)
+        public IActionResult AddItem(ItemPage itemPage)
         {
             if (ModelState.IsValid)
             {
                 ViewBag.Mode = "";
-                int pp = int.Parse(HttpContext.Request.Form["PlatinumCost"]); // Messy, but effective
-                int gp = int.Parse(HttpContext.Request.Form["GoldCost"]);
-                int ep = int.Parse(HttpContext.Request.Form["ElectrumCost"]);
-                int sp = int.Parse(HttpContext.Request.Form["SilverCost"]);
-                int cp = int.Parse(HttpContext.Request.Form["CopperCost"]);
-                item.Cost = new Coins(pp, gp, ep, sp, cp);
-                itemService.Create(item);
+                switch (itemPage.ItemType)
+                {
+                    case Enums.eItemType.ARMOR:
+                        Armor a = (Armor)itemPage.Item;
+                        a.Modifier = int.Parse(HttpContext.Request.Form["Modifier"]);
+                        a.ACMod = int.Parse(HttpContext.Request.Form["ACMod"]);
+                        itemService.Create(a);
+                        break;
+                    case Enums.eItemType.EQUIPMENT:
+                        Equipment e = (Equipment)itemPage.Item;
+                        e.Modifier = int.Parse(HttpContext.Request.Form["Modifier"]);
+                        itemService.Create(e);
+                        break;
+                    case Enums.eItemType.FOOD:
+                        Food f = (Food)itemPage.Item;
+                        itemService.Create(f);
+                        break;
+                    case Enums.eItemType.TOOL:
+                        Tool t = (Tool)itemPage.Item;
+                        itemService.Create(t);
+                        break;
+                    case Enums.eItemType.WEAPON:
+                        Weapon w = (Weapon)itemPage.Item;
+                        w.Modifier = int.Parse(HttpContext.Request.Form["Modifier"]);
+                        w.DamageMod = int.Parse(HttpContext.Request.Form["DamageMod"]);
+                        itemService.Create(w);
+                        break;
+                    case Enums.eItemType.ITEM:
+                        itemService.Create(itemPage.Item);
+                        break;
+                }
+                itemService.Create(itemPage.Item);
+                //ViewBag.ItemType = null;
                 return Redirect("DisplayItems");
             }
 
-            return View("ItemForm", item);
+            return View("ItemForm", itemPage);
         }
 
-        public IActionResult EditItem(Item item)
+        public IActionResult EditItem(ItemPage itemPage)
         {
             if (ModelState.IsValid)
             {
                 ViewBag.Mode = "";
-                int pp = int.Parse(HttpContext.Request.Form["PlatinumCost"]); // Messy, but effective
-                int gp = int.Parse(HttpContext.Request.Form["GoldCost"]);
-                int ep = int.Parse(HttpContext.Request.Form["ElectrumCost"]);
-                int sp = int.Parse(HttpContext.Request.Form["SilverCost"]);
-                int cp = int.Parse(HttpContext.Request.Form["CopperCost"]);
-                item.Cost = new Coins(pp, gp, ep, sp, cp);
-                itemService.Update(item.Id, item);
+                itemService.Update(itemPage.Item.Id, itemPage.Item);
                 return Redirect("DisplayItems");
             }
 
-            return View("ItemForm", item);
+            return View("ItemForm", itemPage);
         }
 
-        public IActionResult AddItemForm()
+        public IActionResult DeleteItem(Item item)
+        {
+            if (ModelState.IsValid)
+            {
+                itemService.Remove(item.Id);
+                return Redirect("DisplayItems");
+            }
+
+            return View("DisplayItems", item);
+        }
+
+        public IActionResult AddItemForm(ItemPage itemPage)
         {
             ViewBag.Mode = "Add";
-            return View("ItemForm");
+            return View("ItemForm", itemPage);
         }
 
-        public IActionResult EditItemForm()
+        public IActionResult EditItemForm(ItemPage itemPage)
         {
             ViewBag.Mode = "Edit";
-            return View("ItemForm");
+            return View("ItemForm", itemPage);
+        }
+
+        public IActionResult ReloadItemForm(ItemPage itemPage)
+        {
+            /*switch (itemPage.ItemType)
+            {
+                case Enums.eItemType.ITEM:
+                    ViewBag.ItemType = "ITEM";
+                    break;
+                case Enums.eItemType.FOOD:
+                    ViewBag.ItemType = "FOOD";
+                    break;
+                case Enums.eItemType.EQUIPMENT:
+                    ViewBag.ItemType = "EQUIPMENT";
+                    break;
+                case Enums.eItemType.WEAPON:
+                    ViewBag.ItemType = "WEAPON";
+                    break;
+                case Enums.eItemType.ARMOR:
+                    ViewBag.ItemType = "ARMOR";
+                    break;
+                case Enums.eItemType.TOOL:
+                    ViewBag.ItemType = "TOOL";
+                    break;
+            }*/
+            return View("ItemForm", itemPage);
         }
 
         public IActionResult ItemForm()
