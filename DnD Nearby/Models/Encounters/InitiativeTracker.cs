@@ -9,7 +9,6 @@ namespace DnD_Nearby.Models
 
     public class InitiativeTracker
     {
-        public string encounterName { get; set; }
         public List<Creature> Creatures { get; set; }
         public Creature CurrentCreature { get; set; } = null;
         public int? CurrentInitiative { get; set; } = null;
@@ -56,7 +55,7 @@ namespace DnD_Nearby.Models
 
         public void AddCreature(Creature creature, int initiative)
         {
-            CreatureInitiatives.Add(creature, initiative);
+            CreatureInitiatives.TryAdd(creature, initiative);
         }
 
         public void RemoveCreature(Creature creature)

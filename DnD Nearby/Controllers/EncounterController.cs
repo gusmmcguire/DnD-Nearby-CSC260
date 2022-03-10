@@ -40,6 +40,8 @@ namespace DnD_Nearby.Controllers
             return View(ecp);
         }
 
+        [Route("/encounter/encounter")]
+        [Route("/encounter/encountercollection")]
         public IActionResult EncounterCollection()
         {
             List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id).ToList();
@@ -64,7 +66,7 @@ namespace DnD_Nearby.Controllers
             else
             {
                 return View("EncounterCollection");
-            } 
+            }
         }
 
         public IActionResult CreateEncounter(EncounterCreationPage enP)
@@ -106,13 +108,6 @@ namespace DnD_Nearby.Controllers
             return View("EncounterCreation", creationPage);
         }
 
-        public IActionResult Encounter()
-        {
-            EncounterPage ep = new EncounterPage();
-
-            return View(ep);
-        }
-
         [HttpPost]
         public IActionResult CalcDiff(EncounterPage ep)
         {
@@ -140,26 +135,21 @@ namespace DnD_Nearby.Controllers
             return View("EncounterCreation", creationPage);
         }
 
-        public IActionResult InitiativeTracker()
+        public IActionResult InitiativeTracker(string encounterID)
         {
-            InitiativePage ip = new InitiativePage();
-            InitiativeTracker it = new InitiativeTracker();
+            Encounter en = enService.Get().FirstOrDefault(encounter => encounter.ID == encounterID);
 
-            List<Creature> Creatures = new List<Creature>
+            if (en != null)
             {
-                new StatBlock(eCR.Eight, "Your mom", "Human", new int[]{ 10, 10, 10, 10, 10, 10 }, 126, 13, new List<string>(){ "Common" }),
-                new StatBlock(eCR.Eight, "Your dad", "Human", new int[]{ 10, 10, 10, 10, 10, 10 }, 126, 13, new List<string>(){ "Common" }),
-                new PlayerCharacter("You", "Human", new int[]{ 20, 20, 20, 20, 20, 20}, 115, 18, new List<string>{ "Common" }, "Goose", "Paladin", 20, "Dead", new List<string>{ "Feet" })
-            };
-
-            it.encounterName = "The battle of the Home";
-            var rand = new Random();
-            foreach (Creature creature in Creatures)
-            {
-                it.AddCreature(creature, rand.Next(1, 21));
+                en.setupCreatures(sbService, ppcService);
+                InitiativePage ip = new InitiativePage(en);
+                return View("Encounter", ip);
             }
-            //ip.encounter.setupCreatures(sbService, ppcService);
-            return View(ip);
+            else
+            {
+                List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id).ToList();
+                return Redirect("~/encounter/encountercollection");
+            }
         }
     }
 }

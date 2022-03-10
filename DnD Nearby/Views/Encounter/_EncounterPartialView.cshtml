@@ -7,4 +7,8 @@
         <input hidden name="encounterID" value="@Model.ID" />
         <input type="submit" value="View" class="btn btn-primary"/>
     </form>
+    <form asp-controller="Encounter" asp-action="InitiativeTracker">
+        <input hidden name="encounterID" value="@Model.ID" />
+        <input type="submit" value="View"/>
+    </form>
 </div>

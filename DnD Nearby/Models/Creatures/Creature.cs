@@ -70,9 +70,15 @@ namespace DnD_Nearby.Models
             int[] tempArray = new int[6];
             for(int i = 0; i < tempArray.Length; i++)
             {
-                tempArray[i] = Attributes[i] / 2;
+                tempArray[i] = (Attributes[i] - 10 ) / 2;
             }
             return tempArray;
+        }
+        
+        public virtual int CalcAttributeMod(int index)
+        {
+            int temp = (Attributes[index] - 10 )/ 2;
+            return temp;
         }
     }
 }
