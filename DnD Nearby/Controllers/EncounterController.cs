@@ -143,7 +143,7 @@ namespace DnD_Nearby.Controllers
             {
                 en.setupCreatures(sbService, ppcService);
                 InitiativePage ip = new InitiativePage(en);
-                return View("Encounter", ip);
+                return View(ip);
             }
             else
             {
@@ -151,6 +151,42 @@ namespace DnD_Nearby.Controllers
                 return Redirect("~/encounter/encountercollection");
             }
         }
+
+        public IActionResult InitiativeTrackerFilled(string encounterID, int[] initiatives)
+        {
+            Encounter en = enService.Get().FirstOrDefault(encounter => encounter.ID == encounterID);
+
+            if (en != null)
+            {
+                en.setupCreatures(sbService, ppcService);
+                InitiativePage ip = new InitiativePage(en, initiatives);
+                return View("InitiativeTracker", ip);
+            }
+            else
+            {
+                List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id).ToList();
+                return Redirect("~/encounter/encountercollection");
+            }
+        }
+
+        public IActionResult InitiativeTrackerNext(string encounterID, int[] initiatives, string currentCreatureName, int currentInit, string previousCreatureName)
+        {
+            Encounter en = enService.Get().FirstOrDefault(encounter => encounter.ID == encounterID);
+
+            if (en != null)
+            {
+                en.setupCreatures(sbService, ppcService);
+                InitiativePage ip = new InitiativePage(en, initiatives, currentCreatureName, currentInit, previousCreatureName);
+                ip.initTracker.NextCreature();
+                return View("InitiativeTracker", ip);
+            }
+            else
+            {
+                List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id).ToList();
+                return Redirect("~/encounter/encountercollection");
+            }
+        }
+
     }
 }
  

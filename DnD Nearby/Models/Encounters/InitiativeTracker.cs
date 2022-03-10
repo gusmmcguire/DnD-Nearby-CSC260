@@ -9,22 +9,12 @@ namespace DnD_Nearby.Models
 
     public class InitiativeTracker
     {
-        public List<Creature> Creatures { get; set; }
+        public Creature PreviousCreature { get; set; } = null;
         public Creature CurrentCreature { get; set; } = null;
         public int? CurrentInitiative { get; set; } = null;
         public Dictionary<Creature, int> CreatureInitiatives { get; set; } = new Dictionary<Creature, int>();
 
-        public InitiativeTracker()
-        {
-            Creatures = new List<Creature>();
-        }
-
-        public InitiativeTracker(string id)
-        {
-            //Encounter encounter = new Encounter(id);
-
-            //Creatures = encounter.Creatures;
-        }
+        public InitiativeTracker() {}
 
         public void NextCreature()
         {
@@ -42,13 +32,20 @@ namespace DnD_Nearby.Models
             }
 
             creature = CreatureInitiatives.Aggregate((x, y) =>
-                (x.Key != CurrentCreature && y.Key != CurrentCreature)
-                ? ((x.Value <= CurrentInitiative && y.Value <= CurrentInitiative)
-                    ? ((x.Value > y.Value) ? x : y)
-                    : CreatureInitiatives.Where(creature => creature.Key == CurrentCreature).First())
-                : ((x.Key != CurrentCreature) ? x : y)
+                (x.Key != CurrentCreature && y.Key != CurrentCreature) // if x and y are not equal to the current creature, continue. Otherwise return whichever isn't the current one
+                    ? (x.Key != PreviousCreature && y.Key != PreviousCreature) // if x and y are not equal to the previous creature, continue. Otherwise return whichever isn't the previous one
+                        ? (x.Value <= CurrentInitiative && y.Value <= CurrentInitiative) // if x and y's initiatives are less than or equel to the current initiative, continue. Otherwise see if either are.
+                            ? (x.Value > y.Value) ? x : y // return whichever has a greater value
+                        : (x.Value <= CurrentInitiative) // if x's value is less than current initiative, return x
+                            ? x
+                        : (y.Value <= CurrentInitiative) // if y's value is less than current initiative, return y
+                            ? y
+                        : CreatureInitiatives.Aggregate((x, y) => (x.Value > y.Value) ? x : y) // return the Creature with the highest initiative
+                    : (x.Key != PreviousCreature) ? x : y // return whichever isn't the previous one
+                : (x.Key != CurrentCreature) ? x : y // return whichever isn't the current one
             );
 
+            PreviousCreature = CurrentCreature;
             CurrentCreature = creature.Key;
             CurrentInitiative = creature.Value;
         }
@@ -61,18 +58,6 @@ namespace DnD_Nearby.Models
         public void RemoveCreature(Creature creature)
         {
             CreatureInitiatives.Remove(creature);
-        }
-
-        public void SetInitiative(Creature creature, int initiative)
-        {
-            if (CreatureInitiatives.ContainsKey(creature))
-            {
-                CreatureInitiatives[creature] = initiative;
-            }
-            else
-            {
-                AddCreature(creature, initiative);
-            }
         }
     }
 }

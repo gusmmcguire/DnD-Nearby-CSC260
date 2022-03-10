@@ -16,6 +16,10 @@ namespace DnD_Nearby.Models
         [BsonElement("ChallengeRating")]
         public eCR CR { get; set; }
         public StatBlock() { }
+        public StatBlock(StatBlock other) : base(other)
+        {
+            CR = other.CR;
+        }
         public StatBlock(eCR cr, string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, List<Item> inventory = null) : base(name, race, attributes, maxHP, ac, languages, inventory)
         {
             CR = cr;
