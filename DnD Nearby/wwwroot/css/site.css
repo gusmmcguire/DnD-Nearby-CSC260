@@ -12,6 +12,10 @@ a.navbar-brand {
     background-color: slategrey !important;
 }
 
+.current-Init {
+    background-color: #abc4dc !important;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: forestgreen;

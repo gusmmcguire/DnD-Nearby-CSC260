@@ -137,14 +137,26 @@ namespace DnD_Nearby.Models
         {
             List<StatBlock> stats = sbS.Get();
             List<PlayerCharacter> players = ppcS.Get();
+            Dictionary<string, int> uniqueNames = new Dictionary<string, int>();
             foreach(string id in CreatureID)
             {
                 bool found = false;
                 foreach(StatBlock stat in stats)
                 {
-                    if(id == stat.Id)
+                    StatBlock temp = new StatBlock(stat);
+                    if(id == temp.Id)
                     {
-                        Creatures.Add(stat);
+                        if (!uniqueNames.TryAdd(temp.Name, 1))
+                        {
+                            uniqueNames[temp.Name]++;
+                        }
+
+                        if(uniqueNames[temp.Name] > 1)
+                        {
+                            temp.Name += " " + uniqueNames[temp.Name];
+                        }
+
+                        Creatures.Add(temp);
                         found = true;
                         break;
                     }

@@ -37,6 +37,14 @@ namespace DnD_Nearby.Models
         public Coins coins { get; set; }
 
         public PlayerCharacter() { }
+        public PlayerCharacter(PlayerCharacter other) : base(other)
+        {
+            this.Player = other.Player;
+            this.Class = other.Class;
+            this.Level = other.Level;
+            this.Background = other.Background;
+            this.Feats = other.Feats;
+        }
         public PlayerCharacter(string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, string player, string classIn, int level, string background, List<string> feats, List<Item> inventory = null) : base(name, race, attributes, maxHP, ac, languages, inventory)
         {
             this.Player = player;

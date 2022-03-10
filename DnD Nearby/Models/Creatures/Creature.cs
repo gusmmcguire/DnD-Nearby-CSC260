@@ -54,6 +54,17 @@ namespace DnD_Nearby.Models
 
 
         public Creature() { }
+        public Creature(Creature other)
+        {
+            this.Id = other.Id;
+            this.Name = other.Name;
+            this.Race = other.Race;
+            this.Attributes = other.Attributes;
+            this.MaxHP = other.MaxHP;
+            this.CurrentHP = MaxHP;
+            this.Languages = other.Languages;
+            this.Inventory = other.Inventory;
+        }
         public Creature(string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, List<Item> inventory = null)
         {
             this.Name = name;

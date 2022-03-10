@@ -8,26 +8,67 @@
     @if (!hasStats)
     {
         <div class="text-center">
-        <h2>You have no Encounter on your account</h2>
-        <h3>Go <a asp-controller="Encounter" asp-action="EncounterCreation">here</a> to add one!</h3>
+            <h2>You have no Encounter on your account</h2>
+            <h3>Go <a asp-controller="Encounter" asp-action="EncounterCreation">here</a> to add one!</h3>
         </div>
     }
     else
     {
         <h1>Encounter: @Model.encounter.encounterName</h1>
         <div class="row">
-            @{ 
+            @{
                 var temp = Model.initTracker.CreatureInitiatives.OrderByDescending(ci => ci.Value);
 
                 foreach (KeyValuePair<Creature, int> creature in temp)
                 {
+                    CreatureInitPage cip = new CreatureInitPage(creature, Model.initTracker.CurrentCreature);
                     <div class="col-4">
-                        <partial name="/Views/Encounter/_CreatureInitPartialView.cshtml" for="@creature" />
+                        <partial name="/Views/Encounter/_CreatureInitPartialView.cshtml" for="@cip" />
                         <br />
                         <br />
                     </div>
                 }
             }
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-6">
+                <h3>Change Initiatives</h3>
+                <form asp-controller="Encounter" asp-action="InitiativeTrackerFilled">
+                    @{
+                        int index = 0;
+                        foreach (KeyValuePair<Creature, int> creature in Model.initTracker.CreatureInitiatives)
+                        {
+                            <label for="@creature.Key.Name">@creature.Key.Name&#39s Initiative</label>
+                            <input type="number" id="@creature.Key.Name" name="initiatives[@index]" value="@creature.Value"/>
+                            <br />
+                            index++;
+                        }
+                    }
+                    <input hidden name="encounterID" value="@Model.encounter.ID" />
+                    <input type="submit" value="Change" class="btn btn-primary" />
+                </form>
+            </div>
+            <div class="col-6">
+                <h3>Next Creature</h3>
+                <form asp-controller="Encounter" asp-action="InitiativeTrackerNext">
+                    <input hidden name="currentInit" value="@Model.initTracker.CurrentInitiative"/>
+                    <input hidden name="currentCreatureName" value="@Model.initTracker.CurrentCreature.Name"/>
+                    <input hidden name="previousCreatureName" value="@Model.initTracker.PreviousCreature?.Name"/>
+                    @{
+                        int index = 0;
+                        foreach (KeyValuePair<Creature, int> creature in Model.initTracker.CreatureInitiatives)
+                        {
+                            <input hidden type="number" id="@creature.Key.Name" name="initiatives[@index]" value="@creature.Value"/>
+                            index++;
+                        }
+                    }
+                    <input hidden name="encounterID" value="@Model.encounter.ID" />
+                    <input type="submit" value="Next" class="btn btn-primary" />
+                </form>
+            </div>
         </div>
     }
 </div>
