@@ -54,11 +54,11 @@ namespace DnD_Nearby.Controllers
                         w.DamageMod = int.Parse(HttpContext.Request.Form["DamageMod"]);
                         itemService.Create(w);
                         break;
-                    case Enums.eItemType.ITEM:
+                    default:
                         itemService.Create(itemPage.Item);
                         break;
                 }
-                itemService.Create(itemPage.Item);
+                //itemService.Create(itemPage.Item);
                 //ViewBag.ItemType = null;
                 return Redirect("DisplayItems");
             }
