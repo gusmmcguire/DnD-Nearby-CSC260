@@ -1,20 +1,33 @@
 ﻿@model InitiativePage 
 @{
     ViewData["Title"] = "Initiative Tracker";
+    bool hasStats = Model != null && Model.encounter.Creatures.Count() > 0;
 }
 
 <div class="container">
-    <h1>Encounter: @Model.initTracker.encounterName</h1>
-    <div class="row">
-        @foreach (KeyValuePair<Creature, int> creature in Model.initTracker.CreatureInitiatives)
-        {
-            CreatureInitPage cip = new CreatureInitPage();
-            cip.CreatureInitiatives = creature;
-            <div class="col-4">
-                <partial name="/Views/PlayerCharacter/_Crea.cshtml" for="@creature" />
-                <br />
-                <br />
-            </div>
-        }
-    </div>
+    @if (!hasStats)
+    {
+        <div class="text-center">
+        <h2>You have no Encounter on your account</h2>
+        <h3>Go <a asp-controller="Encounter" asp-action="EncounterCreation">here</a> to add one!</h3>
+        </div>
+    }
+    else
+    {
+        <h1>Encounter: @Model.encounter.encounterName</h1>
+        <div class="row">
+            @{ 
+                var temp = Model.initTracker.CreatureInitiatives.OrderByDescending(ci => ci.Value);
+
+                foreach (KeyValuePair<Creature, int> creature in temp)
+                {
+                    <div class="col-4">
+                        <partial name="/Views/Encounter/_CreatureInitPartialView.cshtml" for="@creature" />
+                        <br />
+                        <br />
+                    </div>
+                }
+            }
+        </div>
+    }
 </div>
