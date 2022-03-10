@@ -1,51 +1,59 @@
 ﻿@model PlayerPartialMakerPage
-<form asp-controller="Encounter" asp-action="AddPlayerToEncounter" method="post">
+<h2>Input Player Information</h2>
+<form asp-controller="Encounter" asp-action="AddPlayerToEncounter">
 
     <label for="Name">Character Name:</label>
-    <input asp-for="pcForPage.Name" placeholder="name" />
+    <input name="pcForPage.Name" placeholder="name" />
     <span asp-validation-for="pcForPage.Name" class="error-messages alert-danger"></span>
     <br />
     <label for="Race">Character Race:</label>
-    <input asp-for="pcForPage.Race" placeholder="race" />
+    <input name="pcForPage.Race" placeholder="race" />
     <span asp-validation-for="pcForPage.Race" class="error-messages alert-danger"></span>
     <br />
     <label for="MaxHP">Character Max HP:</label>
-    <input asp-for="pcForPage.MaxHP" placeholder="hp" />
+    <input name="pcForPage.MaxHP" placeholder="hp" />
     <span asp-validation-for="pcForPage.MaxHP" class="error-messages alert-danger"></span>
     <br />
     <label for="AC">Character AC:</label>
-    <input asp-for="pcForPage.AC" placeholder="ac" />
+    <input name="pcForPage.AC" placeholder="ac" />
     <span asp-validation-for="pcForPage.AC" class="error-messages alert-danger"></span>
     <br />
+    <label for="AC">Character Level:</label>
+    <input name="pcForPage.Level" placeholder="level" />
+    <span asp-validation-for="pcForPage.Level" class="error-messages alert-danger"></span>
+    <br />
     <label for="Attributes[0]">Strength Attribute:</label>
-    <input asp-for="pcForPage.Attributes[0]" placeholder="10" />
+    <input name="pcForPage.Attributes[0]" placeholder="10" />
     <span asp-validation-for="pcForPage.Attributes[0]" class="error-messages alert-danger"></span>
     <br />
     <label for="Attributes[1]">Dexterity Attribute:</label>
-    <input asp-for="pcForPage.Attributes[1]" placeholder="10" />
+    <input name="pcForPage.Attributes[1]" placeholder="10" />
     <span asp-validation-for="pcForPage.Attributes[1]" class="error-messages alert-danger"></span>
     <br />
     <label for="Attributes[2]">Constitution Attribute:</label>
-    <input asp-for="pcForPage.Attributes[2]" placeholder="10" />
+    <input name="pcForPage.Attributes[2]" placeholder="10" />
     <span asp-validation-for="pcForPage.Attributes[2]" class="error-messages alert-danger"></span>
     <br />
     <label for="Attributes[3]">Intelligence Attribute:</label>
-    <input asp-for="pcForPage.Attributes[3]" placeholder="10" />
+    <input name="pcForPage.Attributes[3]" placeholder="10" />
     <span asp-validation-for="pcForPage.Attributes[3]" class="error-messages alert-danger"></span>
     <br />
     <label for="Attributes[4]">Wisdom Attribute:</label>
-    <input asp-for="pcForPage.Attributes[4]" placeholder="10" />
+    <input name="pcForPage.Attributes[4]" placeholder="10" />
     <span asp-validation-for="pcForPage.Attributes[4]" class="error-messages alert-danger"></span>
     <br />
     <label for="Attributes[5]">Charisma Attribute:</label>
-    <input asp-for="pcForPage.Attributes[5]" placeholder="10" />
+    <input name="pcForPage.Attributes[5]" placeholder="10" />
     <span asp-validation-for="pcForPage.Attributes[5]" class="error-messages alert-danger"></span>
     <br />
 
 
 
-
-    <input hidden asp-for="CreatureRef" value="@Model.CreatureRef" />
+    @{ for (var i = 0; i < Model.CreatureRef.Count(); i++)
+        {
+            <input hidden name="Creatures" value="@Model.CreatureRef[i]" />
+        }
+    }
     <input type="submit" value="Add To Encounter" />
 
 </form>

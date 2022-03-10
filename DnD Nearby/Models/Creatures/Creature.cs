@@ -16,8 +16,7 @@ namespace DnD_Nearby.Models
         public string Id { get; set; }
 
         [BsonElement("account_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string accountId { get; set; }
+        public Guid accountId { get; set; }
 
         [BsonElement("CreatureName")]
         [Required]
@@ -53,6 +52,7 @@ namespace DnD_Nearby.Models
         [BsonElement("Inventory")]
         public List<Item> Inventory { get; set; }
 
+
         public Creature() { }
         public Creature(string name, string race, int[] attributes, int maxHP, int ac, List<string> languages, List<Item> inventory = null)
         {
@@ -70,9 +70,15 @@ namespace DnD_Nearby.Models
             int[] tempArray = new int[6];
             for(int i = 0; i < tempArray.Length; i++)
             {
-                tempArray[i] = Attributes[i] / 2;
+                tempArray[i] = (Attributes[i] - 10 ) / 2;
             }
             return tempArray;
+        }
+        
+        public virtual int CalcAttributeMod(int index)
+        {
+            int temp = (Attributes[index] - 10 )/ 2;
+            return temp;
         }
     }
 }

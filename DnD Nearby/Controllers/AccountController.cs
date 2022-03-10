@@ -5,26 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using DnD_Nearby.Services;
 using DnD_Nearby.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace DnD_Nearby.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AccountService accService;
-
-        public AccountController(AccountService aS)
+        private UserManager<ApplicationUser> userManager;
+        private SignInManager<ApplicationUser> signInManager;
+        
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
-            accService = aS;
-        }
-
-        public IActionResult Index()
-        {
-            return Redirect("/Home/Index");
-        }
-
-        public IActionResult AccountCreation()
-        {
-            return View();
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            
         }
 
         public IActionResult Login()
@@ -32,36 +28,38 @@ namespace DnD_Nearby.Controllers
             return View();
         }
 
-        public IActionResult CreateAccount(Account acc)
+        [Authorize]
+        public IActionResult Profile()
         {
-            if (accService.GetAccount(acc) != null)
-            {
-                ViewBag.Warning = "account already exists";
-                return View("AccountCreation");
-            }
-            if (ModelState.IsValid)
-            {
-                accService.Create(acc);
-                return Redirect("/Home/Index");
-            }
-            return View("AccountCreation");
+            return View();
         }
 
-        //change to be better later
-        public IActionResult LoginAction(Account acc)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Required][EmailAddress] string email, [Required] string password, string returnurl)
         {
-            if (accService.GetAccount(acc) != null)
+            if (ModelState.IsValid)
             {
-                if(accService.GetAccount(acc).Password == acc.Password)
-                return Content(accService.GetAccount(acc).FullName);
-                else
+                ApplicationUser appUser = await userManager.FindByEmailAsync(email);
+                if(appUser != null)
                 {
-                    ViewBag.warning = "incorrect password";
-                    return View("Login");
+                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, password, false, false);
+                    if (result.Succeeded)
+                    {
+                        return Redirect(returnurl ?? "/");
+                    }
                 }
+                ModelState.AddModelError(nameof(email), "Login Failed: Invalid Email or Password");
             }
-            ViewBag.warning = "account does not exist";
-            return View("Login");
+            return View();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

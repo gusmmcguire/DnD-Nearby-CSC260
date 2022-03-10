@@ -6,72 +6,66 @@
 
 <h3 class="alert-danger">@warning</h3>
 <form asp-controller="PlayerCharacter" asp-action="CreateCharacter">
-    <label for="accountId">Associated Account Username:</label>
-    <input asp-for="accountId" placeholder="Username" />
-    <span asp-validation-for="accountId" class="error-messages alert-danger"></span>
+    <input hidden asp-for="accountId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" placeholder="Username" />
     <br />
-    <label for="Name">Character Name:</label>
-    <input asp-for="Name" placeholder="name" />
-    <span asp-validation-for="Name" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Race">Character Race:</label>
-    <input asp-for="Race" placeholder="race" />
-    <span asp-validation-for="Race" class="error-messages alert-danger"></span>
-    <br />
-    <label for="MaxHP">Character Max HP:</label>
-    <input asp-for="MaxHP" placeholder="hp" />
-    <span asp-validation-for="MaxHP" class="error-messages alert-danger"></span>
-    <br />
-    <label for="AC">Armor Class:</label>
-    <input asp-for="AC" placeholder="ac" />
-    <span asp-validation-for="AC" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Player">Player Name:</label>
-    <input asp-for="Player" placeholder="player name" />
-    <span asp-validation-for="Player" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Class">Character Class:</label>
-    <input asp-for="Class" placeholder="class" />
-    <span asp-validation-for="Class" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Background">Character Background:</label>
-    <input asp-for="Background" placeholder="class" />
-    <span asp-validation-for="Background" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Level">Character Level:</label>
-    <input asp-for="Level" placeholder="level" />
-    <span asp-validation-for="Level" class="error-messages alert-danger"></span>
-    <br />
-    <label for="exp">Character Experience:</label>
-    <input asp-for="exp" placeholder="exp" />
-    <span asp-validation-for="exp" class="error-messages alert-danger"></span>
-    <br />
+    <div class="row">
+        <div class="border-green rounded m-1 p-3 col-sm-3 text-center">
+            <input asp-for="Attributes[0]" placeholder="STR" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[0]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[1]" placeholder="DEX" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[1]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[2]" placeholder="CON" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[2]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[3]" placeholder="INT" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[3]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[4]" placeholder="WIS" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[4]" class="error-messages alert-danger"></span>
+            <br />
+            <input asp-for="Attributes[5]" placeholder="CHA" class="rounded border-green col-sm-6 m-2" />
+            <span asp-validation-for="Attributes[5]" class="error-messages alert-danger"></span>
+            <br />
+            <input type="submit" class="col-sm-8 m-2 btn btn-primary" />
+        </div>
+        <div class="border-green rounded m-1 p-3 col">
+            <div class="row text-center border-bottom-green">
+                <div class="text-center col">
+                    <input asp-for="Player" placeholder="Player Name" class="rounded border-green col-sm-3 m-3" />
+                    <span asp-validation-for="Player" class="error-messages alert-danger"></span>
+                    <input asp-for="Name" placeholder="Character Name" class="rounded border-green col-sm-3 m-3" />
+                    <span asp-validation-for="Name" class="error-messages alert-danger"></span>
+                    <input asp-for="Race" placeholder="Race" class="rounded border-green col-sm-3 m-3" />
+                    <span asp-validation-for="Race" class="error-messages alert-danger"></span>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <input asp-for="MaxHP" placeholder="Max HP" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="MaxHP" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="Class" placeholder="Class" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="Class" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="exp" placeholder="Exp" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="exp" class="error-messages alert-danger"></span>
+                </div>
+                <div class="col">
+                    <input asp-for="AC" placeholder="AC" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="AC" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="Background" placeholder="Background" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="Background" class="error-messages alert-danger"></span>
+                    <br />
+                    <input asp-for="Level" placeholder="Level" class="rounded border-green mt-4 mb-3" />
+                    <span asp-validation-for="Level" class="error-messages alert-danger"></span>
+                </div>
+            </div>
 
-    <label for="Attributes[0]">Strength Attribute:</label>
-    <input asp-for="Attributes[0]" placeholder="10" />
-    <span asp-validation-for="Attributes[0]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[1]">Dexterity Attribute:</label>
-    <input asp-for="Attributes[1]" placeholder="10" />
-    <span asp-validation-for="Attributes[1]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[2]">Constitution Attribute:</label>
-    <input asp-for="Attributes[2]" placeholder="10" />
-    <span asp-validation-for="Attributes[2]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[3]">Intelligence Attribute:</label>
-    <input asp-for="Attributes[3]" placeholder="10" />
-    <span asp-validation-for="Attributes[3]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[4]">Wisdom Attribute:</label>
-    <input asp-for="Attributes[4]" placeholder="10" />
-    <span asp-validation-for="Attributes[4]" class="error-messages alert-danger"></span>
-    <br />
-    <label for="Attributes[5]">Charisma Attribute:</label>
-    <input asp-for="Attributes[5]" placeholder="10" />
-    <span asp-validation-for="Attributes[5]" class="error-messages alert-danger"></span>
-    <br />
-
-    <input type="submit" />
-
+        </div>
+    </div>
+    
+    
 </form>

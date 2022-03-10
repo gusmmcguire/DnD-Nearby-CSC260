@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using DnD_Nearby.Services;
 using DnD_Nearby.Models;
 using DnD_Nearby.Enums;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DnD_Nearby.Controllers
 {
+    [Authorize]
     public class EncounterController : Controller
     {
         private readonly AccountService accService;
@@ -29,22 +32,19 @@ namespace DnD_Nearby.Controllers
             return Redirect("/Home/Index");
         }
 
-        public IActionResult EncounterCreation(string user = "admin_test")
+        public IActionResult EncounterCreation()
         {
-
-            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccountByName(user).Id));
+            var accID = accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id.ToString();
+            EncounterCreationPage ecp = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accID));
             ecp.setupString(sbService, ppcService);
             return View(ecp);
         }
 
-        public IActionResult EncounterCollectionForm()
+        [Route("/encounter/encounter")]
+        [Route("/encounter/encountercollection")]
+        public IActionResult EncounterCollection()
         {
-            return View("EncounterCollection");
-        }
-
-        public IActionResult EncounterCollection(string user)
-        {
-            List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccountByName(user).Id).ToList();
+            List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id).ToList();
             return View(tempList);
         }
 
@@ -53,9 +53,20 @@ namespace DnD_Nearby.Controllers
             return View();
         }
 
-        public IActionResult SingleEncounter(Encounter en)
+        public IActionResult SingleEncounter(string encounterID)
         {
-            return View(en);
+            Encounter en = enService.Get().FirstOrDefault(encounter => encounter.ID == encounterID);
+
+            if (en != null)
+            {
+                en.setupCreatures(sbService, ppcService);
+                EncounterPage ep = new EncounterPage(en);
+                return View("Encounter", ep);
+            }
+            else
+            {
+                return View("EncounterCollection");
+            }
         }
 
         public IActionResult CreateEncounter(EncounterCreationPage enP)
@@ -64,7 +75,7 @@ namespace DnD_Nearby.Controllers
             {
                 var en = enP.encounter;
                 en.CreatureID = enP.CreatureIDs.ToList();
-                en.accountId = accService.GetAccountByName(en.accountId).Id;
+                //en.accountId = accService.GetAccountByName(en.accountId).Id;
                 enService.Create(en);
                 return Index();
             }
@@ -82,7 +93,7 @@ namespace DnD_Nearby.Controllers
             if (ModelState.IsValid)
             {
                 enService.Update(en.ID, en);
-                return SingleEncounter(en);
+                return SingleEncounter(en.ID);
             }
             ViewBag.warning = "something invalid";
             return View("EncounterEditor");
@@ -91,17 +102,10 @@ namespace DnD_Nearby.Controllers
         public IActionResult AddStatToEncounter(List<string> creatures, string stat)
         {
             creatures.Add(stat);
-            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id.ToString()));
             creationPage.CreatureIDs = creatures.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
-        }
-
-        public IActionResult Encounter()
-        {
-            EncounterPage ep = new EncounterPage();
-            ep.encounter.setupCreatures(sbService, ppcService);
-            return View(ep);
         }
 
         [HttpPost]
@@ -116,21 +120,36 @@ namespace DnD_Nearby.Controllers
                 ep.encounter.AddCreature(pc);
             }
             ep.diff = ep.encounter.CalcDifficulty();
-
+            
             return View("Encounter", ep);
         }
 
-        [HttpPost]
-        public IActionResult AddPlayerToEncounter(PlayerPartialMakerPage playerPartialPage)
+        public IActionResult AddPlayerToEncounter(List<string> creatures, PlayerCharacter pcForPage)
         {
-
-            ppcService.Create(playerPartialPage.pcForPage);
-            playerPartialPage.CreatureRef.Add(playerPartialPage.pcForPage.Id);
-            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.Get());
-            creationPage.CreatureIDs = playerPartialPage.CreatureRef.ToArray();
+            pcForPage.accountId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            ppcService.Create(pcForPage);
+            creatures.Add(pcForPage.Id);
+            EncounterCreationPage creationPage = new EncounterCreationPage(sbService.GetStatBlocksByAccount(accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id.ToString()));
+            creationPage.CreatureIDs = creatures.ToArray();
             creationPage.setupString(sbService, ppcService);
             return View("EncounterCreation", creationPage);
+        }
 
+        public IActionResult InitiativeTracker(string encounterID)
+        {
+            Encounter en = enService.Get().FirstOrDefault(encounter => encounter.ID == encounterID);
+
+            if (en != null)
+            {
+                en.setupCreatures(sbService, ppcService);
+                InitiativePage ip = new InitiativePage(en);
+                return View("Encounter", ip);
+            }
+            else
+            {
+                List<Encounter> tempList = enService.Get().Where(encounter => encounter.accountId == accService.GetAccount(User.FindFirstValue(ClaimTypes.NameIdentifier)).Id).ToList();
+                return Redirect("~/encounter/encountercollection");
+            }
         }
     }
 }

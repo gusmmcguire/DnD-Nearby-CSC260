@@ -1,0 +1,14 @@
+﻿@model KeyValuePair<Creature, int>
+
+<div class="jumbotron container">
+    <h1>@Model.Key.Name</h1>
+    <h2>@Model.Key.Race</h2>
+    @if (Model.Key.GetType() == typeof(StatBlock))
+    { 
+        <h3>@(((StatBlock)(Model.Key)).CR.ToString())</h3>
+    }else
+    {
+        <h3>@(((PlayerCharacter)(Model.Key)).Level)</h3>
+    }
+    <h3>Initiative: @Model.Value</h3>
+</div>

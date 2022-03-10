@@ -12,17 +12,15 @@ namespace DnD_Nearby.Models
         public EncounterCreationPage() { }
         public EncounterCreationPage(List<StatBlock> statBlocks)
         {
-            encounter = new Encounter();
             statCollection = statBlocks;
         }
 
 
         public List<string> creatureIDs = new List<string>();
         public string[] CreatureIDs { get { return creatureIDs.ToArray(); } set { creatureIDs = value.ToList(); } }
-        public Encounter encounter { get; set; }
+        public Encounter encounter { get; set; } = new Encounter();
         public List<StatBlock> statCollection { get; set; }
         public string displayString { get; set; }
-        public string accountName { get; set; }
         public PlayerCharacter pc { get; set; }
 
         public void setupString(StatBlockService sbS, PartialPlayerService ppcS)

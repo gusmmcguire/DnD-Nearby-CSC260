@@ -1,13 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "SpellPage";
+    ViewData["Title"] = "Spell Collection";
 }
-@model Spell
+@model List<Spell>
 
-<h1>SpellPage</h1>
+<h1>Spell Collection</h1>
+<form asp-controller="Spell" asp-action="SearchSpells" class="col-sm-12 col-md-6 col-lg-6">
+    <h2>Search Spells</h2>
+    <label for="searchTerm">Keyword: </label>
+    <input name="searchTerm" placeholder="Ex: Blast" />
+    <input type="submit" />
+</form>
 
-<h2>Stuff and things</h2>
-<div class="bg-light text-dark m-2 p-2 rounded">
-    <partial name="_SpellPartialView" for="@Model" />
-</div>
-
-<h2>More stuff and more things</h2>
+@foreach (var spell in Model)
+{
+    <partial name="_SpellPartialView" for="@spell" />
+}

@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model List<StatBlock>
+﻿@model List<StatBlock>
 @{
     ViewData["Title"] = "Character Collection Page";
     bool hasStats = Model != null && Model.Count() > 0;
@@ -11,11 +8,10 @@
 @{
     if (!hasStats)
     {
-        <form asp-controller="StatBlock" asp-action="StatBlockCollection">
-            <label for="user">Account Username to Search for</label>
-            <input name="user" placeholder="username"/>
-            <input type="submit" />
-        </form>
+        <div class="text-center">
+            <h2>You have no Stat Blocks on your account</h2>
+            <h3>Go <a asp-controller="StatBlock" asp-action="StatBlockCreation">here</a> to add one!</h3>
+        </div>
     }
     else
     {

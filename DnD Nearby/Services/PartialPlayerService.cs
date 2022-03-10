@@ -32,6 +32,19 @@ namespace DnD_Nearby.Services
             return characters.Find(character => character.Name == ch.Name).FirstOrDefault();
         }
 
+        public List<PlayerCharacter> GetPlayerCharactersByAccount(string userId)
+        {
+            var tempList = new List<PlayerCharacter>();
+            foreach (var pc in characters.Find(acc => true).ToList())
+            {
+                if (pc.accountId.ToString().ToUpper() == userId.ToUpper())
+                {
+                    tempList.Add(pc);
+                }
+            }
+            return tempList;
+        }
+
         public PlayerCharacter Create(PlayerCharacter character)
         {
             characters.InsertOne(character);
