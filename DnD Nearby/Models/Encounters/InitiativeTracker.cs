@@ -31,14 +31,6 @@ namespace DnD_Nearby.Models
                 return;
             }
 
-            //creature = CreatureInitiatives.Aggregate((x, y) =>
-            //    (x.Key != CurrentCreature && y.Key != CurrentCreature)
-            //        ? ((x.Value <= CurrentInitiative && y.Value <= CurrentInitiative)
-            //            ? ((x.Value > y.Value) ? x : y)
-            //            : CreatureInitiatives.Where(creature => creature.Key == CurrentCreature).First())
-            //        : ((x.Key != CurrentCreature) ? x : y)
-            //);
-
             creature = CreatureInitiatives.Aggregate((x, y) =>
                 (x.Key != CurrentCreature && y.Key != CurrentCreature) // if x and y are not equal to the current creature, continue. Otherwise return whichever isn't the current one
                     ? (x.Key != PreviousCreature && y.Key != PreviousCreature) // if x and y are not equal to the previous creature, continue. Otherwise return whichever isn't the previous one
