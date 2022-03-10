@@ -7,7 +7,7 @@ namespace DnD_Nearby.Models
 {
     public class Food : Item
     {
-        public Food(string id, string name, Coins cost, string descriptUrl, string imgUrl) : base(id, name, cost, descriptUrl, imgUrl) { }
+        public Food(string name, Coins cost, string descriptUrl, string imgUrl) : base(name, cost, descriptUrl, imgUrl) { }
 
         public override void UseItem()
         {

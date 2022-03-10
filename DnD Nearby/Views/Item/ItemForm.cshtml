@@ -1,4 +1,5 @@
-﻿@model Item
+﻿@model ItemPage
+@using DnD_Nearby.Enums;
 @{
     string strMethod = "";
 
@@ -6,21 +7,115 @@
     {
         strMethod = "EditItem";
     }
-    else 
+    else
     {
         strMethod = "AddItem";
     }
+
+    @*switch (ViewBag.ItemType)
+    {
+        case "ITEM":
+            Model.ItemType = eItemType.ITEM;
+            break;
+        case "FOOD":
+            Model.ItemType = eItemType.FOOD;
+            break;
+        case "TOOL":
+            Model.ItemType = eItemType.TOOL;
+            break;
+        case "EQUIPMENT":
+            Model.ItemType = eItemType.EQUIPMENT;
+            break;
+        case "ARMOR":
+            Model.ItemType = eItemType.ARMOR;
+            break;
+        case "WEAPON":
+            Model.ItemType = eItemType.WEAPON;
+            break;
+        default:
+            Model.ItemType = null;
+            break;
+    }*@
 }
-<div class="text-center">
-    <form asp-controller="Item" asp-action="@strMethod">
-        <input asp-for="@Model.Name" placeholder="Name"/>
-        <input asp-for="@Model.ImageURL" placeholder="Image URL"/>
-        <input name="PlatinumCost" type="number" placeholder="Platinum Cost"/>
-        <input name="GoldCost" type="number" placeholder="Gold Cost"/>
-        <input name="ElectrumCost" type="number" placeholder="Electrum Cost"/>
-        <input name="SilverCost" type="number" placeholder="Silver Cost"/>
-        <input name="CopperCost" type="number" placeholder="Copper Cost"/>
-        <input asp-for="@Model.DescriptionURL" placeholder="Description URL"/>
+<section class="text-center justify-content-center">
+<h3>ITEM CREATION</h3>
+@if (Model.ItemType == null)
+{
+    <h4>What type of item are you adding?</h4>
+    <form asp-controller="Item" asp-action="ReloadItemForm">
+
+        <select asp-for="ItemType">
+            @foreach (eItemType type in Enum.GetValues(typeof(eItemType)))
+            {
+                <option value="@type">@type.ToString()</option>
+            }
+        </select>
+        <br />
         <button type="submit">SAVE</button>
     </form>
-</div>
+}
+else
+{
+    <div class="text-center align-content-center align-items-center">
+        <form asp-controller="Item" asp-action="@strMethod">
+            <span asp-validation-for="Item.Name"></span>
+            <label asp-for="Item.Name">Item Name</label>
+            <input asp-for="Item.Name" placeholder="Name" />
+            <br />
+            <span asp-validation-for="Item.ImageURL"></span>
+            <label asp-for="Item.ImageURL">Image URL</label>
+            <input asp-for="Item.ImageURL" placeholder="Image URL" />
+            <br />
+            @if (Model.ItemType == eItemType.EQUIPMENT)
+            {
+                Equipment e = (Equipment)Model.Item;
+                <span asp-validation-for="@e.Modifier"></span>
+                <label asp-for="@e.Modifier">Stats Modifier</label>
+                <input asp-for="@e.Modifier" placeholder="Modifier" />
+                <br />
+            }
+            @if (Model.ItemType == eItemType.ARMOR)
+            {
+                Armor a = (Armor)Model.Item;
+                <span asp-validation-for="@a.Modifier"></span>
+                <label asp-for="@a.Modifier">Stats Modifier</label>
+                <input asp-for="@a.Modifier" placeholder="Modifier" />
+                <span asp-validation-for="@a.Modifier"></span>
+                <label asp-for="@a.ACMod">AC Modifier</label>
+                <input asp-for="@a.ACMod" placeholder="AC Modifier" />
+                <br />
+            }
+            @if (Model.ItemType == eItemType.WEAPON)
+            {
+                Weapon w = (Weapon)Model.Item;
+                <span asp-validation-for="@w.Modifier"></span>
+                <label asp-for="@w.Modifier">Stats Modifier</label>
+                <input asp-for="@w.Modifier" placeholder="Modifier" />
+                <label asp-for="@w.DamageMod">Damage Modifier</label>
+                <input asp-for="@w.DamageMod" placeholder="Damage Modifier" />
+                <br />
+            }
+            <label asp-for="Item.DescriptionURL">Description</label>
+            <input asp-for="Item.DescriptionURL" placeholder="Description URL" />
+            <br />
+            <h5>Item Cost:</h5>
+            <label asp-for="Item.Cost.Platinum">PP:</label>
+            <input asp-for="Item.Cost.Platinum" placeholder="Platinum Cost" />
+            <br />
+            <label asp-for="Item.Cost.Gold">GP:</label>
+            <input asp-for="Item.Cost.Gold" placeholder="Gold Cost" />
+            <br />
+            <label asp-for="Item.Cost.Electrum">EP:</label>
+            <input asp-for="Item.Cost.Electrum" type="number" placeholder="Electrum Cost" />
+            <br />
+            <label asp-for="Item.Cost.Silver">SP:</label>
+            <input asp-for="Item.Cost.Silver" placeholder="Silver Cost" />
+            <br />
+            <label asp-for="Item.Cost.Copper">GP:</label>
+            <input asp-for="Item.Cost.Copper" placeholder="Copper Cost" />
+            <br />
+            <button type="submit">SAVE</button>
+        </form>
+    </div>
+}
+</section>
