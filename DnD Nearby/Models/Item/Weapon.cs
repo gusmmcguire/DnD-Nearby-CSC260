@@ -12,8 +12,8 @@ namespace DnD_Nearby.Models
         [BsonElement("DamageMod")]
         public int DamageMod { get; set; }
 
-        public Weapon(string id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped = false, int modifier = 0, int damageMod = 0) : 
-            base(id, name, cost, descriptUrl, imgUrl, isEquipped, modifier)
+        public Weapon(string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped = false, int modifier = 0, int damageMod = 0) : 
+            base(name, cost, descriptUrl, imgUrl, isEquipped, modifier)
         {
             this.DamageMod = damageMod;
         }

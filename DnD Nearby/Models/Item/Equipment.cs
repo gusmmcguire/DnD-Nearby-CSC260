@@ -14,7 +14,7 @@ namespace DnD_Nearby.Models
         [BsonElement("Modifier")]
         public int Modifier { get; set; }
 
-        public Equipment(string id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped = false, int modifier = 0) : base(id, name, cost, descriptUrl, imgUrl)
+        public Equipment(string name, Coins cost, string descriptUrl, string imgUrl, bool isEquipped = false, int modifier = 0) : base(name, cost, descriptUrl, imgUrl)
         {
             this.IsEquipped = IsEquipped;
             this.Modifier = modifier;

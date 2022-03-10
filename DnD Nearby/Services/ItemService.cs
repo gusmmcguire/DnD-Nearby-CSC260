@@ -40,6 +40,36 @@ namespace DnD_Nearby.Services
             return item;
         }
 
+        public Armor Create(Armor item)
+        {
+            items.InsertOne(item);
+            return item;
+        }
+
+        public Food Create(Food item)
+        {
+            items.InsertOne(item);
+            return item;
+        }
+
+        public Weapon Create(Weapon item)
+        {
+            items.InsertOne(item);
+            return item;
+        }
+
+        public Equipment Create(Equipment item)
+        {
+            items.InsertOne(item);
+            return item;
+        }
+
+        public Tool Create(Tool item)
+        {
+            items.InsertOne(item);
+            return item;
+        }
+
         public void Update(string id, Item itemIn)
         {
             items.ReplaceOne(item => item.Id == id, itemIn);

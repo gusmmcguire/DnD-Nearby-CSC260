@@ -12,8 +12,8 @@ namespace DnD_Nearby.Models
         [BsonElement("ACMod")]
         public int ACMod { get; set; }
 
-        public Armor(string id, string name, Coins cost, string descriptUrl, string imgUrl, bool isEquip = false, int modifier = 0, int acMod = 0) : 
-            base(id, name, cost, descriptUrl, imgUrl, isEquip, modifier)
+        public Armor(string name, Coins cost, string descriptUrl, string imgUrl, bool isEquip = false, int modifier = 0, int acMod = 0) : 
+            base(name, cost, descriptUrl, imgUrl, isEquip, modifier)
         {
             this.ACMod = acMod;
         }
